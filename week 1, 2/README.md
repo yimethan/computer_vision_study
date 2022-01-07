@@ -1,1 +1,1 @@
-# CV-study
+# Introduction to computer vision
