@@ -634,38 +634,38 @@ ex) an array ranging 0 to 2
 
 ### intensity transformations
 
-\begin{equation*}
+```{math}
 g(x,y)=T(f(x,y))
-\end{equation*}
+```
 
 + `x` is the row index and `y` is the column index
-+ transformation $T$
++ transformation `T`
 
 ### image negatives
-$$
+```math
 g(x,y)=L-1-f(x,y)
-$$
+```
 Using the intensity transformation function notation
-$$
+```math
 s = L - 1 - r
-$$
-+ an image with $L$ intensity values ranging from $[0,L-1]$
+```
++ an image with `L` intensity values ranging from `[0,L-1]`
   
-ex) For $L= 256$ the formulas simplifys to:
-$$
+ex) For `L= 256` the formulas simplifys to:
+```math
 g(x,y)=255-f(x,y)
-$$
-$$
+```
+```math
 s=255-r
-$$
+```
 
 ### brightness & contrast adjustments
 
-$$
-g(x,y) = \alpha f(x,y) + \beta
-$$
-+ $\alpha$ for contrast control
-+  $\beta$ for brightness control
+```math
+g(x,y) = α f(x,y) + β
+```
++ α for contrast control
++ β for brightness control
 
 ### histogram equalization
 `cv2.equalizeHist()`
