@@ -634,9 +634,9 @@ ex) an array ranging 0 to 2
 
 ### intensity transformations
 
-
-[!equation](https://latex.codecogs.com/svg.image?%5Ctextit%7Bg(x,y)=T(f(x,y))%7D)
-
+\begin{equation*}
+g(x,y)=T(f(x,y))
+\end{equation*}
 
 + `x` is the row index and `y` is the column index
 + transformation $T$
