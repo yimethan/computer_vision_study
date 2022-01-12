@@ -8,7 +8,7 @@
 + IBM Watson to analyze and properly identify classes
 of carbonate rock
 + quantify soft skills and conduct early candidate assessments to shortlist the candidates
-+ tagging videos with keywords based on the objects that appear in each scene => security footage
++ tagging videos with keywords based on the objects that appear in each scene &rarr; security footage
 + check for degrees of rust and other structural defects of electric towers
   
   1) take high resolution images from different angles
@@ -57,7 +57,7 @@ of carbonate rock
 have lower values and lighter shades have higher values (0~255, black as 0 and white as 255)
 
 + if reduce the number of intensity values on
-the right image => low contrast
+the right image &rarr; low contrast
 
 + RGB - color values are represented as different channels, and each channels has its own intensity values
 
@@ -67,7 +67,7 @@ the right image => low contrast
 
 + intensities corresponding to the person are represented with one and the rest are zeros
 
-+ video sequence is a sequence of images => each frame of the video
++ video sequence is a sequence of images &rarr; each frame of the video
 
 **Image formats**
 
@@ -675,7 +675,7 @@ g(x,y) = α f(x,y) + β
 ### thresholding and simple segmentation
 
 : extracting objects from an image
-+ pixel (i,j) > threshold => set that pixel to 1 or 255, otherwise, 1 or 0
++ pixel (i,j) > threshold &rarr; set that pixel to 1 or 255, otherwise, 1 or 0
 
 ## **Spacial operations in image processing**
 
