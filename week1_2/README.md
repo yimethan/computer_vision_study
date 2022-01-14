@@ -541,7 +541,7 @@ resizeImg = img.resize((new_width, new_height))
 img.resize(theta)
 ```
 
-3. Mathematical
+3. Mathematical operations
 
 + Array operations ( &rarr; np )
 
@@ -576,7 +576,7 @@ A = U.dot(B)
 new = cv2.resize(img, None, fx = 2, fy = 1, interpolation = cv2.INTER_NEAREST)
 ```
 
-1. Translation : shifting the location of the image
+2. Translation : shifting the location of the image
 
 + `tx` : number of pixels to shift the location in the horizontal direction
 +  `ty` : number of pixels you shift in the vertical direction
@@ -610,7 +610,7 @@ plt.imshow(cv2.cvtColor(new_iamge, cv2.COLOR_BGR2RGB))
 plt.show()
 ```
 
-1. Mathematical operations
+3. Mathematical operations
 
 + Array operations
 
