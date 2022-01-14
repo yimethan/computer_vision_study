@@ -45,17 +45,17 @@ of carbonate rock
 
 ## **Image processing pipeline**
 
-1. Acquisition and storage : image needs to be caputured, stored on device as a file
+1. Acquisition and storage : image needs to be captured, stored on device as a file
 2. Load into memory and save to disk : image needs to be read from the disk into memory, stored using data structure, and data structure needs to be serialized into an image file
 3. Manipulation, enhancement, and restoration
 + run few transformations no the image
 + enhance image quality
 + restore image from noise degradation
 4. Segmentation : to extract objects of interest
-5. Information extraction/representation : to repersent in alternative form
+5. Information extraction/representation : to represent in alternative form
 6. Image understanding/interpretation
   + Image classification (ex. whether an image contains a human object or not)
-  + Object recognition (ex. finding the locatino of the car objects in an image with a bounding box)
+  + Object recognition (ex. finding the location of the car objects in an image with a bounding box)
 
 - - -
 
@@ -270,7 +270,18 @@ img = cv2.imread('name', cv2.IMREAD_GRAYSCALE)
 
 5. Color channels
 
-&rarr; same with PIL
+```python
+baboon=cv2.imread('baboon.png')
+plt.figure(figsize=(10,10))
+plt.imshow(cv2.cvtColor(baboon, cv2.COLOR_BGR2RGB))
+plt.show()
+
+blue, green, red = baboon[:, :, 0], baboon[:, :, 1], baboon[:, :, 2]
+# assign each color channels into seperate variables (in BGR format)
+
+im_bgr = cv2.vconcat([blue, green, red])
+#concatenate each channels with vconcat()
+```
 
 ## **Manipulation**
 
