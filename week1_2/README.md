@@ -415,7 +415,9 @@ img.paste(cropImg, box = (left, upper))
   + rotate(img, int)
   
 ```python
-flip = {"ROTATE_90_CLOCKWISE":cv2.ROTATE_90_CLOCKWISE,"ROTATE_90_COUNTERCLOCKWISE":cv2.ROTATE_90_COUNTERCLOCKWISE,"ROTATE_180":cv2.ROTATE_180}
+flip = {"ROTATE_90_CLOCKWISE":cv2.ROTATE_90_CLOCKWISE,
+  "ROTATE_90_COUNTERCLOCKWISE":cv2.ROTATE_90_COUNTERCLOCKWISE,
+  "ROTATE_180":cv2.ROTATE_180}
 ```
 
 ```python
@@ -423,7 +425,7 @@ im_flip = cv2.flip(img, flipcode)
 im_rot = cv2.rotate(img, int)
 ```
 
-1. Crop images
+3. Crop images
 
 &rarr; Array slicing
 
