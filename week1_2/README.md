@@ -618,7 +618,7 @@ plt.show()
   
 &rarr; same with PIL
 
-## **Spacial filtering**
+## **Spatial filtering**
 
 `Filtering` : enhancing an image by sharpening the image (ex. removing the noise from an image)
 
@@ -655,7 +655,8 @@ img_f = noisyImg.filter(ImageFilter.GaussianBlur(4))
 
 + Sharpening : involves smoothing the image and calculating the derivatives
 
-    + own kernel
+> own kernel
+
 
 ```python
 kernel = np.array( [ [-1, -1, -1], [-1, 9, -1], [-1, -1, -1] ] )
@@ -665,7 +666,7 @@ kernel = ImageFilter.Kernel((3, 3), kernel.flatten())
 img = img.filter(kernel)
 ```
 
-  + predefined filter
+> predefined filter
 
 ```python
 sharpened = img.filter(ImageFilter.SHARPEN)
