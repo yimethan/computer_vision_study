@@ -343,7 +343,7 @@ im_mirror = ImageOps.mirror(img)
 im_tr = Image.transpose(1)
 ```
 
-1. Crop images
+3. Crop images
 
 + Array slicing
 
@@ -445,8 +445,8 @@ cv2.rectangle(img_draw, pt1 = start_p, pt2 = end_p, color = (0, 255, 0), thickne
 + Font
 
 ```python
-img_draw = cv2.putText(img = img, text = 'stuff', org = (10, 500), color = (255, 0, 0), fontFace = 4, fontScale = 5, thickness = 2)
-
+img_draw = cv2.putText(img = img, text = 'stuff', org = (10, 500),
+        color = (255, 0, 0), fontFace = 4, fontScale = 5, thickness = 2)
 # org : bottom-left
 ```
 
