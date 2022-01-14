@@ -486,10 +486,6 @@ g(x,y)=T(f(x,y))
 g(x, y) = L-1-f(x, y)
 s = L-1-r
 ```
-   
-```python
-img_neg = (-1) * img + 255
-```
 
 ex) For `L= 256` the formulas simplifys to:
 ```math
@@ -497,6 +493,10 @@ g(x,y)=255-f(x,y)
 ```
 ```math
 s=255-r
+```
+   
+```python
+img_neg = (-1) * img + 255
 ```
 
 
