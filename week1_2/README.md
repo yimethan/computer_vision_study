@@ -712,7 +712,18 @@ img_f = cv2.GaussianBlur(n_img, (5, 5), sigmaX = 4, sigmaY = 4)
 
 + Sharpening
 
-&rarr; same with PIL
+```python
+# Common Kernel for image sharpening
+kernel = np.array([[-1,-1,-1], 
+                   [-1, 9,-1],
+                   [-1,-1,-1]])
+
+# Applys the sharpening filter using kernel on the original image without noise
+sharpened = cv2.filter2D(image, -1, kernel)
+
+# Plots the sharpened image and the original image without noise
+plot_image(sharpened , image, title_1="Sharpened image",title_2="Image")
+```
 
 + Edges
 
