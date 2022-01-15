@@ -710,7 +710,7 @@ img_f = cv2.GaussianBlur(n_img, (5, 5), sigmaX = 4, sigmaY = 4)
 # sigma : kernel standard deviation in the X/Y direction
 ```
 
-+ Sharpening
++ Sharpening : involves smoothing the image and calculating the derivatives
 
 ```python
 # Common Kernel for image sharpening
