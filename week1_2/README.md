@@ -728,9 +728,9 @@ plot_image(sharpened , image, title_1="Sharpened image",title_2="Image")
 + Edges
 
 ```python
-grad_x = cv2.Sobe(src, ddepth, dx = 1, dy = 0, ksize = 3)
-# ksize : 1, 3, 5, 7
-# dx, dy : order of the derivative x/y
+grad_x = cv2.Sobel(src, ddepth, dx = 1, dy = 0, ksize = 3)
+grad_y = cv2.Sobel(src=img_gray, ddepth=ddepth, dx=0, dy=1, ksize=3)
+# dx, dy : order of the derivative x/y, ksize should be 1, 3, 5, 7
 
 abs_grad_x = cv2.convertScaleAbs(grad_x)
 abs_grad_y = cv2.convertScaleAbs(grad_y)
