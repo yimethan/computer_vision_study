@@ -7,6 +7,18 @@ Week 1 - 2:
 - [x] - Watch lectures week 1, 2 on https://www.coursera.org/learn/introduction-computer-vision-watson-opencv?specialization=ai-engineer
 - [x] - Install jupyter notebook, anaconda, opencv.
 
+More: 
+- Color spaces: Opencv documentation, BGR, RGB, HSV.
+- Threshold: Otsu -> how to choose a threshold value for segmentation
+- Canny Edge detection
+- Editor Application: 
+  + Open/Save image 
+  + Drop
+  + Draw
+  + Filter 
+  + Adjust: Brightness, R, G, B, H, S, V
+  + Advanced: Segmentation (Otsu), Edge detection (Canny edge).
+
 
 Week 3 - 4:
 - [ ] - Watch lectures week 1,2 on https://www.coursera.org/learn/neural-networks-deep-learning.
