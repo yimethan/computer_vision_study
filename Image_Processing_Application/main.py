@@ -1,4 +1,4 @@
-import tkinter as tk
+from tkinter import *
 
 #프로그래밍 순서
 #메인창 생성 - tk 객체 생성
@@ -6,16 +6,19 @@ import tkinter as tk
 #위젯을 창에 배치 - GUI 컴포넌트를 메인 창에 배치
 #메인 루프 실행 - GUI 화면 완성
 
-root = tk.Tk()
-root.title('Image Processing Application')
-root.resizable(False, False)
+def openImage():
+    print('open image')
 
-menubar = tk.Menu(root)
+root = Tk()
+root.title('Image Processing Application')
+
+menubar = Menu(root)
+root.config(menu = menubar)
 
 # new(open), clear, save, save as
-filemenu = tk.Menu(menubar, tearoff = 0)
+filemenu = Menu(menubar, tearoff = 0)
 menubar.add_cascade(label = 'File', menu = filemenu)
-# filemenu.add_command(label ='Open', command = openImage)
+filemenu.add_command(label ='Open', command = openImage)
 # filemenu.add_command(label = 'Save', command = saveImage)
 # filemenu.add_command(label = 'Save As...', command = saveAsImage)
 
@@ -24,7 +27,7 @@ menubar.add_cascade(label = 'File', menu = filemenu)
 # Filter - negative, BW, Sepia, Emboss, Gaussian blur, median blur, apply
 # Adjust: Brightness, R, G, B, H, S, V = slide bar, apply button
 # clear
-editmenu = tk.Menu(menubar, tearoff = 0)
+editmenu = Menu(menubar, tearoff = 0)
 menubar.add_cascade(label = 'Edit', menu = editmenu)
 # editmenu.add_command(label = 'Crop', command = cropImage)
 # editmenu.add_command(label = 'Draw', command = drawImage)
@@ -32,6 +35,5 @@ menubar.add_cascade(label = 'Edit', menu = editmenu)
 # editmenu.add_command(label = 'Adjust', command = adjustImage)
 # editmenu.add_comand(label = 'Clear', command = clearImage)
 
-root.config(menu = menubar)
 root.mainloop()
 # mainloop() : 이벤트 메시지 루프, 이벤트로부터 오는 메시지를 받고 전달하는 역할
