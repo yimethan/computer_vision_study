@@ -160,9 +160,12 @@ def BWFilter():
 def sepiaFilter():
     temp = curImg.copy()
     tempArr = np.array(temp)
-    tempArr = cv2.cvtColor(tempArr, cv2.COLOR_BGR2RGB)
-    # Cannot construct a dtype from an array - 필터 씌우는 방법 바꿔보
-    tempArr = np.array(tempArr, np.matrix([[0.393, 0.769, 0.189], [0.349, 0.686, 0.168], [0.272, 0.534, 0.131]]))
+    # tempArr = cv2.cvtColor(tempArr, cv2.COLOR_BGR2RGB)
+    # Cannot construct a dtype from an array - 필터 씌우는 방법 바꿔보 -> 수정함, 되나 봐야 함
+    tempArr = np.array(tempArr, dtype=np.float64)
+    tempArr = cv2.transform(tempArr, np.matrix([[0.272, 0.534, 0.131],
+                                                [0.349, 0.686, 0.168],
+                                                [0.393, 0.769, 0.189]]))
     tempArr[np.where(tempArr > 255)] = 255
     tempArr = np.array(tempArr, dtype = np.uint8)
 
