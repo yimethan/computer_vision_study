@@ -13,7 +13,7 @@ menubar = Menu(root)
 root.config(menu = menubar)
 
 def displayImage(img, width, height):
-    global canvas, imgPI, originalImg, oriWidth, oriHeight, curWidth, curHeight
+    global canvas, imgPI, originalImg, curImg
 
     root.geometry(str(width) + 'x' + str(height))
     if canvas != None:
@@ -34,7 +34,7 @@ def displayImage(img, width, height):
     canvas.pack()
 
 def openImage():
-    global canvas, imgPI, originalImg, curImg, oriWidth, oriHeight, curWidth, curHeight
+    global originalImg, curImg, canvas, imgPI
 
     filename = filedialog.askopenfilename(initialdir='/', title='Select file',
                 filetypes=(('JPG files', '*.jpg'), ('JPEG files', '*.jpeg'),
@@ -77,10 +77,9 @@ def cropOk():
     displayImage(temp, width, height)
     sizeLabel.configure(text='Image size(h, w) = ' + str(height) + ', ' + str(width))
 
-def cancel():
+def cancelCrop():
     displayImage(curImg, curWidth, curHeight)
     cropWindow.destroy()
-    filterWindow.destroy()
 
 def cropApply():
     curImg = temp.copy()
@@ -131,7 +130,7 @@ def cropImage():
     okButton.place(x=100, y=400)
     okButton.pack()
 
-    cancelButton = Button(cropWindow, text = 'Cancel', command = cancel)
+    cancelButton = Button(cropWindow, text = 'Cancel', command = cancelCrop)
     cancelButton.place(x=100, y=450)
     cancelButton.pack()
 
@@ -140,7 +139,11 @@ def cropImage():
     applyButton.pack()
 
 
-# 수정 -> 되나 봐야 함
+def cancelFilter():
+    displayImage(curImg, curWidth, curHeight)
+    filterWindow.destroy()
+
+# 이미지 사라짐 ㄷ ㄷ
 def negativeFilter():
     temp = curImg.copy()
     tempArr = np.array(temp)
@@ -234,7 +237,7 @@ def filterImage():
     medianButton.pack()
     applyButton = Button(filterWindow, text = 'Apply', command = filterApply)
     applyButton.pack()
-    cancelButton = Button(filterWindow, text = 'Cancel', command = cancel)
+    cancelButton = Button(filterWindow, text = 'Cancel', command = cancelFilter)
     cancelButton.pack()
 
 
