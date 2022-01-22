@@ -4,7 +4,7 @@ from PIL import Image, ImageTk
 import cv2, numpy as np
 
 canvas, imgPI = None, None
-originalImg, curImg = None, None
+originalImg, curImg, temp = None, None, None
 oriWidth, oriHeight, curWidth, curHeight = 0, 0, 0, 0
 
 root = Tk()
@@ -34,9 +34,9 @@ def displayImage(img, width, height):
     canvas.pack()
 
 def openImage():
-    global originalImg, curImg, canvas, imgPI
+    global originalImg, curImg, canvas, imgPI, oriWidth, oriHeight, curWidth, curHeight
 
-    filename = filedialog.askopenfilename(initialdir='/', title='Select file',
+    filename = filedialog.askopenfilename(initialdir='/Desktop', title='Select file',
                 filetypes=(('JPG files', '*.jpg'), ('JPEG files', '*.jpeg'),
                 ('PNG files', '*.png'), ('All files', '*.*')))
     originalImg = Image.open(filename) # PIL object
@@ -78,10 +78,14 @@ def cropOk():
     sizeLabel.configure(text='Image size(h, w) = ' + str(height) + ', ' + str(width))
 
 def cancelCrop():
+    global curImg, curWidth, curHeight
+
     displayImage(curImg, curWidth, curHeight)
     cropWindow.destroy()
 
 def cropApply():
+    global curImg, curHeight, curWidth
+
     curImg = temp.copy()
     curHeight, curWidth = curImg.height, curImg.width
     displayImage(curImg, curWidth, curHeight)
@@ -140,77 +144,76 @@ def cropImage():
 
 
 def cancelFilter():
+    global curImg, curWidth, curHeight
+
     displayImage(curImg, curWidth, curHeight)
     filterWindow.destroy()
 
-# 이미지 사라짐 ㄷ ㄷ
 def negativeFilter():
-    temp = curImg.copy()
-    tempArr = np.array(temp)
-    tempArr = cv2.cvtColor(tempArr, cv2.COLOR_BGR2RGB)
-    tempArr = cv2.bitwise_not(tempArr)
+    global temp, curImg, curWidth, curHeight
 
-    # Cannot handle this data type: (1, 1, 3), <i2
-    temp = Image.fromarray(tempArr)
-    displayImage(temp, curWidth, curHeight)
-
-# 디스플레이까지 되는데 흑백 아님 - 수정했고 되나 봐야 함
-def BWFilter():
-    temp = curImg.copy()
-    temp.convert('L')
-    displayImage(temp, curWidth, curHeight)
-
-def sepiaFilter():
     temp = curImg.copy()
     tempArr = np.array(temp)
     # tempArr = cv2.cvtColor(tempArr, cv2.COLOR_BGR2RGB)
-    # Cannot construct a dtype from an array - 필터 씌우는 방법 바꿔보 -> 수정함, 되나 봐야 함
-    tempArr = np.array(tempArr, dtype=np.float64)
-    tempArr = cv2.transform(tempArr, np.matrix([[0.272, 0.534, 0.131],
-                                                [0.349, 0.686, 0.168],
-                                                [0.393, 0.769, 0.189]]))
-    tempArr[np.where(tempArr > 255)] = 255
-    tempArr = np.array(tempArr, dtype = np.uint8)
+    tempArr = 255 - tempArr
 
+    tempArr = tempArr.astype(np.uint8)
     temp = Image.fromarray(tempArr)
     displayImage(temp, curWidth, curHeight)
 
-# 디스플레이 되는데 효과 안 먹음 - 되나 봐야 함
-def embossFilter():
-    temp = curImg.copy()
-    tempArr = np.array(temp)
-    tempArr = cv2.cvtColor(tempArr, cv2.COLOR_BGR2GRAY)
-
-    ddepth = cv2.CV_16S
-    grad_x = cv2.Sobel(src=tempArr, ddepth=ddepth, dx=1, dy=0, ksize=3)
-    grad_y = cv2.Sobel(src=tempArr, ddepth=ddepth, dx=0, dy=1, ksize=3)
-    abs_grad_x = cv2.convertScaleAbs(grad_x)
-    abs_grad_y = cv2.convertScaleAbs(grad_y)
-    grad = cv2.addWeighted(abs_grad_x, 0.5, abs_grad_y, 0.5, 0)
-    tempArr = cv2.bitwise_not(grad)
-
-    temp = Image.fromarray(tempArr)
-    displayImage(temp, curWidth, curHeight)
-
-# 디스플레이 되는데 효과 안 먹음
-def gaussianFilter():
-    temp = curImg.copy()
-    tempArr = np.array(temp)
-    tempArr = cv2.cvtColor(tempArr, cv2.COLOR_BGR2RGB)
-    tempArr = cv2.GaussianBlur(tempArr, (3, 3), sigmaX = 0.1, sigmaY = 0.1)
-
-    temp = Image.fromarray(tempArr)
-    displayImage(temp, curWidth, curHeight)
-
-# 디스플레이 되는데 효과 안 먹음
-def medianFilter():
-    temp = curImg.copy()
-    tempArr = np.array(temp)
-    tempArr = cv2.cvtColor(tempArr, cv2.COLOR_BGR2GRAY)
-    filtered_image = cv2.medianBlur(tempArr, 5)
-
-    temp = Image.fromarray(tempArr)
-    displayImage(temp, curWidth, curHeight)
+# def BWFilter():
+#     temp = curImg.copy()
+#     temp.convert('L')
+#     displayImage(temp, curWidth, curHeight)
+#
+# def sepiaFilter():
+#     temp = curImg.copy()
+#     tempArr = np.array(temp)
+#     # tempArr = cv2.cvtColor(tempArr, cv2.COLOR_BGR2RGB)
+#     # Cannot construct a dtype from an array
+#     tempArr = np.array(tempArr, dtype=np.float64)
+#     tempArr = cv2.transform(tempArr, np.matrix([[0.272, 0.534, 0.131],
+#                                                 [0.349, 0.686, 0.168],
+#                                                 [0.393, 0.769, 0.189]]))
+#     tempArr[np.where(tempArr > 255)] = 255
+#     tempArr = np.array(tempArr, dtype = np.uint8)
+#
+#     temp = Image.fromarray(tempArr)
+#     displayImage(temp, curWidth, curHeight)
+#
+# def embossFilter():
+#     temp = curImg.copy()
+#     tempArr = np.array(temp)
+#     tempArr = cv2.cvtColor(tempArr, cv2.COLOR_BGR2GRAY)
+#
+#     ddepth = cv2.CV_16S
+#     grad_x = cv2.Sobel(src=tempArr, ddepth=ddepth, dx=1, dy=0, ksize=3)
+#     grad_y = cv2.Sobel(src=tempArr, ddepth=ddepth, dx=0, dy=1, ksize=3)
+#     abs_grad_x = cv2.convertScaleAbs(grad_x)
+#     abs_grad_y = cv2.convertScaleAbs(grad_y)
+#     grad = cv2.addWeighted(abs_grad_x, 0.5, abs_grad_y, 0.5, 0)
+#     tempArr = cv2.bitwise_not(grad)
+#
+#     temp = Image.fromarray(tempArr)
+#     displayImage(temp, curWidth, curHeight)
+#
+# def gaussianFilter():
+#     temp = curImg.copy()
+#     tempArr = np.array(temp)
+#     tempArr = cv2.cvtColor(tempArr, cv2.COLOR_BGR2RGB)
+#     tempArr = cv2.GaussianBlur(tempArr, (3, 3), sigmaX = 0.1, sigmaY = 0.1)
+#
+#     temp = Image.fromarray(tempArr)
+#     displayImage(temp, curWidth, curHeight)
+#
+# def medianFilter():
+#     temp = curImg.copy()
+#     tempArr = np.array(temp)
+#     tempArr = cv2.cvtColor(tempArr, cv2.COLOR_BGR2GRAY)
+#     filtered_image = cv2.medianBlur(tempArr, 5)
+#
+#     temp = Image.fromarray(tempArr)
+#     displayImage(temp, curWidth, curHeight)
 
 def filterApply():
     curImg = temp.copy()
@@ -225,16 +228,16 @@ def filterImage():
 
     negativeButton = Button(filterWindow, text = 'Negative', command = negativeFilter)
     negativeButton.pack()
-    BWButton = Button(filterWindow, text = 'Black White', command = BWFilter)
-    BWButton.pack()
-    sepiaButton = Button(filterWindow, text = 'Sepia', command = sepiaFilter)
-    sepiaButton.pack()
-    embossButton = Button(filterWindow, text = 'Emboss', command = embossFilter)
-    embossButton.pack()
-    gaussianButton = Button(filterWindow, text = 'Gaussian Blur', command = gaussianFilter)
-    gaussianButton.pack()
-    medianButton = Button(filterWindow, text = 'Median Blur', command = medianFilter)
-    medianButton.pack()
+    # BWButton = Button(filterWindow, text = 'Black White', command = BWFilter)
+    # BWButton.pack()
+    # sepiaButton = Button(filterWindow, text = 'Sepia', command = sepiaFilter)
+    # sepiaButton.pack()
+    # embossButton = Button(filterWindow, text = 'Emboss', command = embossFilter)
+    # embossButton.pack()
+    # gaussianButton = Button(filterWindow, text = 'Gaussian Blur', command = gaussianFilter)
+    # gaussianButton.pack()
+    # medianButton = Button(filterWindow, text = 'Median Blur', command = medianFilter)
+    # medianButton.pack()
     applyButton = Button(filterWindow, text = 'Apply', command = filterApply)
     applyButton.pack()
     cancelButton = Button(filterWindow, text = 'Cancel', command = cancelFilter)
