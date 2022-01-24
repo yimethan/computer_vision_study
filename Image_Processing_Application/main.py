@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter import filedialog
 from PIL import Image, ImageTk
 import cv2, numpy as np
+import matplotlib.pyplot as plt
 
 canvas, imgPI = None, None
 originalImg, curImg, temp = None, None, None
@@ -10,7 +11,7 @@ oriWidth, oriHeight, curWidth, curHeight = 0, 0, 0, 0
 root = Tk()
 root.title('Image Processing Application')
 menubar = Menu(root)
-root.config(menu = menubar)
+root.config(menu=menubar)
 
 def displayImage(img, width, height):
     global canvas, imgPI, originalImg, curImg
@@ -18,12 +19,12 @@ def displayImage(img, width, height):
     root.geometry(str(width) + 'x' + str(height))
     if canvas != None:
         canvas.destroy()
-    canvas = Canvas(root, width = width, height = height)
-    imgPI = PhotoImage(width = width, height = height)
-    canvas.create_image((width/2, height/2), image = imgPI, state = 'normal')
+    canvas = Canvas(root, width=width, height=height)
+    imgPI = PhotoImage(width=width, height=height)
+    canvas.create_image((width/2, height/2), image=imgPI, state='normal')
 
     rgbString = ''
-    rgbImage = curImg.convert('RGB')
+    rgbImage = img.convert('RGB')
     for i in range(0, height):
         tmpString = ''
         for j in range(0, width):
@@ -45,19 +46,19 @@ def openImage():
     curImg = originalImg.copy()
     curWidth = oriWidth
     curHeight = oriHeight
-    displayImage(img = curImg, width = oriWidth, height = oriHeight)
+    displayImage(img=curImg, width=oriWidth, height=oriHeight)
 
 def saveImage():
     if curImg == None:
         return
-    filename = filedialog.asksaveasfile(mode='w', defaultextension = '.jpg')
+    filename = filedialog.asksaveasfile(mode='w', defaultextension='.jpg')
     imgRGB = curImg.convert('RGB')
     imgRGB.save(filename)
 
-filemenu = Menu(menubar, tearoff = 0)
-menubar.add_cascade(label = 'File', menu = filemenu)
-filemenu.add_command(label ='Open', command = openImage)
-filemenu.add_command(label = 'Save As...', command = saveImage)
+filemenu = Menu(menubar, tearoff=0)
+menubar.add_cascade(label='File', menu=filemenu)
+filemenu.add_command(label='Open', command=openImage)
+filemenu.add_command(label='Save As...', command=saveImage)
 
 
 
@@ -82,14 +83,16 @@ def cancelCrop():
 
     displayImage(curImg, curWidth, curHeight)
     cropWindow.destroy()
+    temp = None
 
 def cropApply():
-    global curImg, curHeight, curWidth
+    global temp, curImg, curHeight, curWidth
 
     curImg = temp.copy()
     curHeight, curWidth = curImg.height, curImg.width
     displayImage(curImg, curWidth, curHeight)
     cropWindow.destroy()
+    temp = None
 
 # cropTk창에 index 입력, okButton => 잘린 이미지(temp) canvas, Image size temp 크기로
 # cancel => curImg canvas
@@ -102,11 +105,11 @@ def cropImage():
     cropWindow = Toplevel(root)
     cropWindow.title('Crop')
 
-    sizeLabel = Label(cropWindow, text = 'Image size(h, w) = ' + str(curHeight) + ', ' + str(curWidth))
+    sizeLabel = Label(cropWindow, text='Image size(h, w) = ' + str(curHeight) + ', ' + str(curWidth))
     sizeLabel.place(x=100, y=50)
     sizeLabel.pack()
 
-    rowLabel = Label(cropWindow, text = 'Row')
+    rowLabel = Label(cropWindow, text='Row')
     rowLabel.place(x=100, y=100)
     rowLabel.pack()
 
@@ -118,7 +121,7 @@ def cropImage():
     rowEntryTo.place(x=100, y=200)
     rowEntryTo.pack()
 
-    columnLabel = Label(cropWindow, text = 'Column')
+    columnLabel = Label(cropWindow, text='Column')
     columnLabel.place(x=100, y=250)
     columnLabel.pack()
 
@@ -130,35 +133,42 @@ def cropImage():
     columnEntryTo.place(x=100, y=350)
     columnEntryTo.pack()
 
-    okButton = Button(cropWindow, text = 'OK', command = cropOk)
+    okButton = Button(cropWindow, text='OK', command=cropOk)
     okButton.place(x=100, y=400)
     okButton.pack()
 
-    cancelButton = Button(cropWindow, text = 'Cancel', command = cancelCrop)
+    cancelButton = Button(cropWindow, text='Cancel', command=cancelCrop)
     cancelButton.place(x=100, y=450)
     cancelButton.pack()
 
-    applyButton = Button(cropWindow, text = 'Apply', command = cropApply)
+    applyButton = Button(cropWindow, text='Apply', command=cropApply)
     applyButton.place(x=100, y=500)
     applyButton.pack()
 
 
+
+
+
 def cancelFilter():
-    global curImg, curWidth, curHeight
+    global curImg, curWidth, curHeight, temp
 
     displayImage(curImg, curWidth, curHeight)
     filterWindow.destroy()
+    temp = None
 
 def negativeFilter():
     global temp, curImg, curWidth, curHeight
 
     temp = curImg.copy()
     tempArr = np.array(temp)
-    # tempArr = cv2.cvtColor(tempArr, cv2.COLOR_BGR2RGB)
-    tempArr = 255 - tempArr
+    tempArr = cv2.cvtColor(tempArr, cv2.COLOR_BGR2RGB)
+    # cv2.imshow('tempArr', tempArr)
 
-    tempArr = tempArr.astype(np.uint8)
-    temp = Image.fromarray(tempArr)
+    negArr = 255 - tempArr
+    negArr = negArr.astype(np.uint8)
+    # cv2.imshow('negArr', negArr)
+
+    temp = Image.fromarray(negArr)
     displayImage(temp, curWidth, curHeight)
 
 # def BWFilter():
@@ -216,9 +226,14 @@ def negativeFilter():
 #     displayImage(temp, curWidth, curHeight)
 
 def filterApply():
+    global temp, curImg
+
+    if temp == None:
+        pass
     curImg = temp.copy()
     displayImage(curImg, curWidth, curHeight)
     filterWindow.destroy()
+    temp = None
 
 def filterImage():
     global filterWindow
@@ -226,7 +241,7 @@ def filterImage():
     filterWindow = Toplevel(root)
     filterWindow.title('Filter')
 
-    negativeButton = Button(filterWindow, text = 'Negative', command = negativeFilter)
+    negativeButton = Button(filterWindow, text='Negative', command=negativeFilter)
     negativeButton.pack()
     # BWButton = Button(filterWindow, text = 'Black White', command = BWFilter)
     # BWButton.pack()
@@ -238,16 +253,16 @@ def filterImage():
     # gaussianButton.pack()
     # medianButton = Button(filterWindow, text = 'Median Blur', command = medianFilter)
     # medianButton.pack()
-    applyButton = Button(filterWindow, text = 'Apply', command = filterApply)
+    applyButton = Button(filterWindow, text='Apply', command=filterApply)
     applyButton.pack()
-    cancelButton = Button(filterWindow, text = 'Cancel', command = cancelFilter)
+    cancelButton = Button(filterWindow, text='Cancel', command=cancelFilter)
     cancelButton.pack()
 
 
-editmenu = Menu(menubar, tearoff = 0)
-menubar.add_cascade(label = 'Edit', menu = editmenu)
-editmenu.add_command(label = 'Crop', command = cropImage)
-editmenu.add_command(label = 'Filter', command = filterImage)
+editmenu = Menu(menubar, tearoff=0)
+menubar.add_cascade(label='Edit', menu=editmenu)
+editmenu.add_command(label='Crop', command=cropImage)
+editmenu.add_command(label='Filter', command=filterImage)
 # editmenu.add_command(label = 'Draw', command = drawImage)
 # editmenu.add_command(label = 'Adjust', command = adjustImage)
 # editmenu.add_comand(label = 'Clear', command = clearImage)
