@@ -63,20 +63,18 @@ filemenu.add_command(label='Save As...', command=saveImage)
 
 
 def cropOk():
-    global sizeLabel, temp, rowEntryFrom, rowEntryTo, columnEntryFrom, columnEntryTo
-
-    width, height = temp.width, temp.height
+    global curSizeLabel, temp, rowEntryFrom, rowEntryTo, columnEntryFrom, columnEntryTo
 
     tempArr = np.array(temp)
+
     row1, row2 = int(rowEntryFrom.get()), int(rowEntryTo.get())
     col1, col2 = int(columnEntryFrom.get()), int(columnEntryTo.get())
-    print(row1, row2, col1, col2)
-    tempArr = tempArr[row1:row2+1, col1:col2+1]
-    temp = Image.fromarray(tempArr)
+    tempArr = tempArr[row1:row2, col1:col2]
 
+    temp = Image.fromarray(tempArr)
     width, height = temp.width, temp.height
     displayImage(temp, width, height)
-    sizeLabel.configure(text='Image size(h, w) = ' + str(height) + ', ' + str(width))
+    curSizeLabel.configure(text='Current(h, w) = ' + str(height) + ', ' + str(width))
 
 def cancelCrop():
     global curImg, curWidth, curHeight
@@ -98,14 +96,14 @@ def cropApply():
 # cancel => curImg canvas
 # apply => curImg = temp; curImg canvas
 def cropImage():
-    global cropWindow, sizeLabel, temp, rowEntryFrom, rowEntryTo, columnEntryFrom, columnEntryTo
+    global curSizeLabel, cropWindow, sizeLabel, temp, rowEntryFrom, rowEntryTo, columnEntryFrom, columnEntryTo
 
     temp = curImg.copy()
 
     cropWindow = Toplevel(root)
     cropWindow.title('Crop')
 
-    sizeLabel = Label(cropWindow, text='Image size(h, w) = ' + str(curHeight) + ', ' + str(curWidth))
+    sizeLabel = Label(cropWindow, text='Original(h, w) = ' + str(curHeight) + ', ' + str(curWidth))
     sizeLabel.place(x=100, y=50)
     sizeLabel.pack()
 
@@ -145,6 +143,10 @@ def cropImage():
     applyButton.place(x=100, y=500)
     applyButton.pack()
 
+    curSizeLabel = Label(cropWindow, text='Current(h, w) = ' + str(curHeight) + ', ' + str(curWidth))
+    curSizeLabel.place(x=100, y=550)
+    curSizeLabel.pack()
+
 
 
 
@@ -162,68 +164,80 @@ def negativeFilter():
     temp = curImg.copy()
     tempArr = np.array(temp)
     tempArr = cv2.cvtColor(tempArr, cv2.COLOR_BGR2RGB)
-    # cv2.imshow('tempArr', tempArr)
-
     negArr = 255 - tempArr
     negArr = negArr.astype(np.uint8)
-    # cv2.imshow('negArr', negArr)
-
     temp = Image.fromarray(negArr)
     displayImage(temp, curWidth, curHeight)
 
-# def BWFilter():
-#     temp = curImg.copy()
-#     temp.convert('L')
-#     displayImage(temp, curWidth, curHeight)
-#
-# def sepiaFilter():
-#     temp = curImg.copy()
-#     tempArr = np.array(temp)
-#     # tempArr = cv2.cvtColor(tempArr, cv2.COLOR_BGR2RGB)
-#     # Cannot construct a dtype from an array
-#     tempArr = np.array(tempArr, dtype=np.float64)
-#     tempArr = cv2.transform(tempArr, np.matrix([[0.272, 0.534, 0.131],
-#                                                 [0.349, 0.686, 0.168],
-#                                                 [0.393, 0.769, 0.189]]))
-#     tempArr[np.where(tempArr > 255)] = 255
-#     tempArr = np.array(tempArr, dtype = np.uint8)
-#
-#     temp = Image.fromarray(tempArr)
-#     displayImage(temp, curWidth, curHeight)
-#
-# def embossFilter():
-#     temp = curImg.copy()
-#     tempArr = np.array(temp)
-#     tempArr = cv2.cvtColor(tempArr, cv2.COLOR_BGR2GRAY)
-#
-#     ddepth = cv2.CV_16S
-#     grad_x = cv2.Sobel(src=tempArr, ddepth=ddepth, dx=1, dy=0, ksize=3)
-#     grad_y = cv2.Sobel(src=tempArr, ddepth=ddepth, dx=0, dy=1, ksize=3)
-#     abs_grad_x = cv2.convertScaleAbs(grad_x)
-#     abs_grad_y = cv2.convertScaleAbs(grad_y)
-#     grad = cv2.addWeighted(abs_grad_x, 0.5, abs_grad_y, 0.5, 0)
-#     tempArr = cv2.bitwise_not(grad)
-#
-#     temp = Image.fromarray(tempArr)
-#     displayImage(temp, curWidth, curHeight)
-#
-# def gaussianFilter():
-#     temp = curImg.copy()
-#     tempArr = np.array(temp)
-#     tempArr = cv2.cvtColor(tempArr, cv2.COLOR_BGR2RGB)
-#     tempArr = cv2.GaussianBlur(tempArr, (3, 3), sigmaX = 0.1, sigmaY = 0.1)
-#
-#     temp = Image.fromarray(tempArr)
-#     displayImage(temp, curWidth, curHeight)
-#
-# def medianFilter():
-#     temp = curImg.copy()
-#     tempArr = np.array(temp)
-#     tempArr = cv2.cvtColor(tempArr, cv2.COLOR_BGR2GRAY)
-#     filtered_image = cv2.medianBlur(tempArr, 5)
-#
-#     temp = Image.fromarray(tempArr)
-#     displayImage(temp, curWidth, curHeight)
+def BWFilter():
+    global temp, curImg, curWidth, curHeight
+
+    temp = curImg.copy()
+    tempArr = np.array(temp)
+    if len(tempArr.shape) < 3: # if the image is already in grayscale
+        return
+    grayArr = cv2.cvtColor(tempArr, cv2.COLOR_BGR2GRAY)
+    temp = Image.fromarray(grayArr)
+    displayImage(temp, curWidth, curHeight)
+
+def sepiaFilter():
+    global temp, curImg, curWidth, curHeight
+
+    temp = curImg.copy()
+    tempArr = np.array(temp)
+
+    if len(tempArr.shape) < 3:
+        tempArr = cv2.cvtColor(tempArr, cv2.COLOR_GRAY2BGR)
+
+    tempArr = np.array(tempArr, dtype=np.float64)
+    tempArr = cv2.transform(tempArr, np.matrix([[0.272, 0.534, 0.131],
+                                                [0.349, 0.686, 0.168],
+                                                [0.393, 0.769, 0.189]]))
+    tempArr[np.where(tempArr > 255)] = 255
+    tempArr = np.array(tempArr, dtype=np.uint8)
+    tempArr = cv2.cvtColor(tempArr, cv2.COLOR_BGR2RGB)
+    temp = Image.fromarray(tempArr)
+
+    displayImage(temp, curWidth, curHeight)
+
+def embossFilter():
+    global temp, curImg, curWidth, curHeight
+
+    temp = curImg.copy()
+    tempArr = np.array(temp)
+    tempArr = cv2.cvtColor(tempArr, cv2.COLOR_BGR2GRAY)
+
+    ddepth = cv2.CV_16S
+    grad_x = cv2.Sobel(src=tempArr, ddepth=ddepth, dx=1, dy=0, ksize=3)
+    grad_y = cv2.Sobel(src=tempArr, ddepth=ddepth, dx=0, dy=1, ksize=3)
+    abs_grad_x = cv2.convertScaleAbs(grad_x)
+    abs_grad_y = cv2.convertScaleAbs(grad_y)
+    grad = cv2.addWeighted(abs_grad_x, 0.5, abs_grad_y, 0.5, 0)
+    tempArr = cv2.bitwise_not(grad)
+
+    temp = Image.fromarray(tempArr)
+    displayImage(temp, curWidth, curHeight)
+
+def gaussianFilter():
+    global temp, curImg, curWidth, curHeight
+
+    temp = curImg.copy()
+    tempArr = np.array(temp)
+    blurArr = cv2.GaussianBlur(tempArr, (5, 5), sigmaX=4, sigmaY=4)
+
+    temp = Image.fromarray(blurArr)
+    displayImage(temp, curWidth, curHeight)
+
+def medianFilter():
+    global temp, curImg, curWidth, curHeight
+
+    temp = curImg.copy()
+    tempArr = np.array(temp)
+    # tempArr = cv2.cvtColor(tempArr, cv2.COLOR_BGR2GRAY)
+    medArr = cv2.medianBlur(tempArr, 5)
+
+    temp = Image.fromarray(medArr)
+    displayImage(temp, curWidth, curHeight)
 
 def filterApply():
     global temp, curImg
@@ -243,20 +257,51 @@ def filterImage():
 
     negativeButton = Button(filterWindow, text='Negative', command=negativeFilter)
     negativeButton.pack()
-    # BWButton = Button(filterWindow, text = 'Black White', command = BWFilter)
-    # BWButton.pack()
-    # sepiaButton = Button(filterWindow, text = 'Sepia', command = sepiaFilter)
-    # sepiaButton.pack()
-    # embossButton = Button(filterWindow, text = 'Emboss', command = embossFilter)
-    # embossButton.pack()
-    # gaussianButton = Button(filterWindow, text = 'Gaussian Blur', command = gaussianFilter)
-    # gaussianButton.pack()
-    # medianButton = Button(filterWindow, text = 'Median Blur', command = medianFilter)
-    # medianButton.pack()
+    BWButton = Button(filterWindow, text='Black White', command=BWFilter)
+    BWButton.pack()
+    sepiaButton = Button(filterWindow, text='Sepia', command=sepiaFilter)
+    sepiaButton.pack()
+    embossButton = Button(filterWindow, text='Emboss', command=embossFilter)
+    embossButton.pack()
+    gaussianButton = Button(filterWindow, text='Gaussian Blur', command=gaussianFilter)
+    gaussianButton.pack()
+    medianButton = Button(filterWindow, text='Median Blur', command=medianFilter)
+    medianButton.pack()
     applyButton = Button(filterWindow, text='Apply', command=filterApply)
     applyButton.pack()
     cancelButton = Button(filterWindow, text='Cancel', command=cancelFilter)
     cancelButton.pack()
+
+
+
+# def drawImage():
+#     global drawWindow, temp, curImg, curWidth, curHeight
+#
+#     drawWindow = Toplevel(root)
+#     drawWindow.title('Draw')
+#
+#     canvasDraw = Canvas(root, bg='black')
+#     canvasDraw.pack(anchor='nw', fill='both', expand=1)
+#     temp = curImg.copy()
+#     imgPIDraw = PhotoImage(temp)
+#     canvasDraw.create_image((curWidth/2, curHeight/2), image=imgPIDraw)
+#
+#     def getXY(event):
+#         global lastX, lastY
+#         lastX, lastY = event.x, event.y
+#
+#     def drawLine(event):
+#         global lastX, lastY
+#         canvas.create_line((lastX, lastY, event.x, event.y), fill='red', width=5)
+#         lastX, lastY = event.x, event.y
+#
+#     canvas.bind('button 1', getXY)
+#     canvas.bind('b1 - motion', drawLine)
+
+    # cancelDrawButton = Button(text='Cancel', command=cancelDraw)
+    # cancelDrawButton.pack()
+    # applyDrawButton = Button(text='Apply', command=applyDraw)
+    # applyDrawButton.pack()
 
 
 editmenu = Menu(menubar, tearoff=0)
