@@ -1,6 +1,6 @@
 from tkinter import *
 from tkinter import filedialog
-from PIL import Image, ImageTk
+from PIL import Image, ImageTk, ImageDraw
 import cv2, numpy as np
 import matplotlib.pyplot as plt
 
@@ -35,7 +35,7 @@ def displayImage(img, width, height):
     canvas.pack()
 
 def openImage():
-    global originalImg, curImg, canvas, imgPI, oriWidth, oriHeight, curWidth, curHeight
+    global originalImg, curImg, oriWidth, oriHeight, curWidth, curHeight
 
     filename = filedialog.askopenfilename(initialdir='/Desktop', title='Select file',
                 filetypes=(('JPG files', '*.jpg'), ('JPEG files', '*.jpeg'),
@@ -49,6 +49,8 @@ def openImage():
     displayImage(img=curImg, width=oriWidth, height=oriHeight)
 
 def saveImage():
+    global curImg
+
     if curImg == None:
         return
     filename = filedialog.asksaveasfile(mode='w', defaultextension='.jpg')
@@ -77,26 +79,25 @@ def cropOk():
     curSizeLabel.configure(text='Current(h, w) = ' + str(height) + ', ' + str(width))
 
 def cancelCrop():
-    global curImg, curWidth, curHeight
+    global cropWindow, curImg, curWidth, curHeight, temp
 
     displayImage(curImg, curWidth, curHeight)
     cropWindow.destroy()
     temp = None
 
 def cropApply():
-    global temp, curImg, curHeight, curWidth
+    global cropWindow, temp, curImg, curHeight, curWidth
 
     curImg = temp.copy()
-    curHeight, curWidth = curImg.height, curImg.width
+
+    curHeight, curWidth = temp.height, temp.width
     displayImage(curImg, curWidth, curHeight)
     cropWindow.destroy()
     temp = None
 
-# cropTk창에 index 입력, okButton => 잘린 이미지(temp) canvas, Image size temp 크기로
-# cancel => curImg canvas
-# apply => curImg = temp; curImg canvas
 def cropImage():
-    global curSizeLabel, cropWindow, sizeLabel, temp, rowEntryFrom, rowEntryTo, columnEntryFrom, columnEntryTo
+    global curImg, curHeight, curWidth, curSizeLabel, cropWindow, temp
+    global rowEntryFrom, rowEntryTo, columnEntryFrom, columnEntryTo
 
     temp = curImg.copy()
 
@@ -152,7 +153,7 @@ def cropImage():
 
 
 def cancelFilter():
-    global curImg, curWidth, curHeight, temp
+    global filterWindow, curImg, curWidth, curHeight, temp
 
     displayImage(curImg, curWidth, curHeight)
     filterWindow.destroy()
@@ -233,14 +234,14 @@ def medianFilter():
 
     temp = curImg.copy()
     tempArr = np.array(temp)
-    # tempArr = cv2.cvtColor(tempArr, cv2.COLOR_BGR2GRAY)
+
     medArr = cv2.medianBlur(tempArr, 5)
 
     temp = Image.fromarray(medArr)
     displayImage(temp, curWidth, curHeight)
 
 def filterApply():
-    global temp, curImg
+    global filterWindow, temp, curImg, curWidth, curHeight
 
     if temp == None:
         pass
@@ -274,41 +275,55 @@ def filterImage():
 
 
 
-# def drawImage():
-#     global drawWindow, temp, curImg, curWidth, curHeight
-#
-#     drawWindow = Toplevel(root)
-#     drawWindow.title('Draw')
-#
-#     canvasDraw = Canvas(root, bg='black')
-#     canvasDraw.pack(anchor='nw', fill='both', expand=1)
-#     temp = curImg.copy()
-#     imgPIDraw = PhotoImage(temp)
-#     canvasDraw.create_image((curWidth/2, curHeight/2), image=imgPIDraw)
-#
-#     def getXY(event):
-#         global lastX, lastY
-#         lastX, lastY = event.x, event.y
-#
-#     def drawLine(event):
-#         global lastX, lastY
-#         canvas.create_line((lastX, lastY, event.x, event.y), fill='red', width=5)
-#         lastX, lastY = event.x, event.y
-#
-#     canvas.bind('button 1', getXY)
-#     canvas.bind('b1 - motion', drawLine)
 
-    # cancelDrawButton = Button(text='Cancel', command=cancelDraw)
-    # cancelDrawButton.pack()
-    # applyDrawButton = Button(text='Apply', command=applyDraw)
-    # applyDrawButton.pack()
+def cancelDraw():
+    global canvas, drawWindow, curWidth, curHeight, curImg, temp
+
+    drawWindow.destroy()
+    displayImage(curImg, curWidth, curHeight)
+    temp = None
+
+def applyDraw():
+    global drawWindow, curImg, temp, canvas
+
+    curImg = temp.copy()
+    drawWindow.destroy()
+    temp = None
+
+def drawImage():
+    global drawWindow, curImg, curWidth, curHeight, canvas, temp
+
+    drawWindow = Toplevel(root)
+    drawWindow.title('Draw')
+
+    temp = curImg.copy()
+    draw = ImageDraw.Draw(temp)
+    displayImage(temp, width=curWidth, height=curHeight)
+
+    def getXY(event):
+        global lastX, lastY
+        lastX, lastY = event.x, event.y
+
+    def drawLine(event):
+        global lastX, lastY, canvas
+        canvas.create_line((lastX, lastY, event.x, event.y), fill='white', width=3)
+        draw.line((lastX, lastY, event.x, event.y), fill='white', width=3)
+        lastX, lastY = event.x, event.y
+
+    canvas.bind('<Button-1>', getXY) # left button of the mouse
+    canvas.bind('<B1-Motion>', drawLine)
+
+    cancelDrawButton = Button(drawWindow, text='Cancel', command=cancelDraw)
+    cancelDrawButton.pack()
+    applyDrawButton = Button(drawWindow, text='Apply', command=applyDraw)
+    applyDrawButton.pack()
 
 
 editmenu = Menu(menubar, tearoff=0)
 menubar.add_cascade(label='Edit', menu=editmenu)
 editmenu.add_command(label='Crop', command=cropImage)
 editmenu.add_command(label='Filter', command=filterImage)
-# editmenu.add_command(label = 'Draw', command = drawImage)
+editmenu.add_command(label = 'Draw', command = drawImage)
 # editmenu.add_command(label = 'Adjust', command = adjustImage)
 # editmenu.add_comand(label = 'Clear', command = clearImage)
 
