@@ -319,12 +319,61 @@ def drawImage():
     applyDrawButton.pack()
 
 
+
+def adjustImage():
+    global adjustWindow, temp, curImg
+
+    temp = curImg.copy()
+    tempArr = np.array(temp)
+
+    adjustWindow = Toplevel(root)
+    adjustWindow.title('Adjust')
+
+    rLabel = Label(adjustWindow, text='R')
+    rLabel.pack()
+    rScale = Scale(adjustWindow, from_=-50, to=50, length=100, orient='horizontal')
+    rScale.pack()
+    rVal = IntVar()
+    gLabel = Label(adjustWindow, text='G')
+    gLabel.pack()
+    gScale = Scale(adjustWindow, from_=-50, to=50, length=100, orient='horizontal')
+    gScale.pack()
+    gVal = IntVar()
+    bLabel = Label(adjustWindow, text='B')
+    bLabel.pack()
+    bScale = Scale(adjustWindow, from_=-50, to=50, length=100, orient='horizontal')
+    bScale.pack()
+    bVal = IntVar()
+
+    hLabel = Label(adjustWindow, text='Hue')
+    hLabel.pack()
+    hScale = Scale(adjustWindow, from_=-50, to=50, length=100, orient='horizontal')
+    hScale.pack()
+    hVal = IntVar()
+    sLabel = Label(adjustWindow, text='Saturation')
+    sLabel.pack()
+    sScale = Scale(adjustWindow, from_=-50, to=50, length=100, orient='horizontal')
+    sScale.pack()
+    sVal = IntVar()
+    vLabel = Label(adjustWindow, text='Value')
+    vLabel.pack()
+    vScale = Scale(adjustWindow, from_=-50, to=50, length=100, orient='horizontal')
+    vScale.pack()
+    vVal = IntVar()
+
+
+    # cancelButton = Button(adjustWindow, text='Cancel', command=cancelAdjust)
+    # cancelButton.pack()
+    # applyButton = Button(adjustWindow, text='Apply', command=applyAdjust)
+    # applyButton.pack()
+
+
 editmenu = Menu(menubar, tearoff=0)
 menubar.add_cascade(label='Edit', menu=editmenu)
 editmenu.add_command(label='Crop', command=cropImage)
 editmenu.add_command(label='Filter', command=filterImage)
 editmenu.add_command(label = 'Draw', command = drawImage)
-# editmenu.add_command(label = 'Adjust', command = adjustImage)
+editmenu.add_command(label = 'Adjust', command = adjustImage)
 # editmenu.add_comand(label = 'Clear', command = clearImage)
 
 
