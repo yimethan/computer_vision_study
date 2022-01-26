@@ -329,52 +329,76 @@ def adjustImage():
     adjustWindow = Toplevel(root)
     adjustWindow.title('Adjust')
 
+    rVal = IntVar()
     rLabel = Label(adjustWindow, text='R')
     rLabel.pack()
-    rScale = Scale(adjustWindow, from_=-50, to=50, length=100, orient='horizontal')
+    rScale = Scale(adjustWindow, variable=rVal, from_=-50, to=50, length=100, orient='horizontal')
     rScale.pack()
-    rVal = IntVar()
+    gVal = IntVar()
     gLabel = Label(adjustWindow, text='G')
     gLabel.pack()
-    gScale = Scale(adjustWindow, from_=-50, to=50, length=100, orient='horizontal')
+    gScale = Scale(adjustWindow, variable=gVal, from_=-50, to=50, length=100, orient='horizontal')
     gScale.pack()
-    gVal = IntVar()
+    bVal = IntVar()
     bLabel = Label(adjustWindow, text='B')
     bLabel.pack()
-    bScale = Scale(adjustWindow, from_=-50, to=50, length=100, orient='horizontal')
+    bScale = Scale(adjustWindow, variable=bVal, from_=-50, to=50, length=100, orient='horizontal')
     bScale.pack()
-    bVal = IntVar()
 
+    hVal = IntVar()
     hLabel = Label(adjustWindow, text='Hue')
     hLabel.pack()
-    hScale = Scale(adjustWindow, from_=-50, to=50, length=100, orient='horizontal')
+    hScale = Scale(adjustWindow, variable=hVal, from_=-50, to=50, length=100, orient='horizontal')
     hScale.pack()
-    hVal = IntVar()
+    sVal = IntVar()
     sLabel = Label(adjustWindow, text='Saturation')
     sLabel.pack()
-    sScale = Scale(adjustWindow, from_=-50, to=50, length=100, orient='horizontal')
+    sScale = Scale(adjustWindow, variable=sVal, from_=-50, to=50, length=100, orient='horizontal')
     sScale.pack()
-    sVal = IntVar()
+    vVal = IntVar()
     vLabel = Label(adjustWindow, text='Value')
     vLabel.pack()
-    vScale = Scale(adjustWindow, from_=-50, to=50, length=100, orient='horizontal')
+    vScale = Scale(adjustWindow, variable=vVal, from_=-50, to=50, length=100, orient='horizontal')
     vScale.pack()
-    vVal = IntVar()
+
+def cancelAdjust():
+    global temp, curImg, curWidth, curHeight, adjustWindow
+
+    temp = None
+    adjustWindow.destroy()
+    displayImage(curImg, curWidth, curHeight)
+
+def applyAdjust():
+    global temp, curImg, curWidth, curHeight, adjustWindow
+
+    curImg = temp.copy()
+    temp = None
+    adjustWindow.destroy()
+    displayImage(curImg, width=curWidth, height=curHeight)
+
+    cancelButton = Button(adjustWindow, text='Cancel', command=cancelAdjust)
+    cancelButton.pack()
+    applyButton = Button(adjustWindow, text='Apply', command=applyAdjust)
+    applyButton.pack()
 
 
-    # cancelButton = Button(adjustWindow, text='Cancel', command=cancelAdjust)
-    # cancelButton.pack()
-    # applyButton = Button(adjustWindow, text='Apply', command=applyAdjust)
-    # applyButton.pack()
 
+
+def clearImage():
+    global curImg, temp, curWidth, curHeight, originalImg, oriWidth, oriHeight
+
+    curImg = originalImg.copy()
+    temp = None
+    curWidth = oriWidth.width()
+    curHeight = oriHeight.height()
+    displayImage(curImg, width=curWidth, height=curHeight)
 
 editmenu = Menu(menubar, tearoff=0)
 menubar.add_cascade(label='Edit', menu=editmenu)
 editmenu.add_command(label='Crop', command=cropImage)
 editmenu.add_command(label='Filter', command=filterImage)
-editmenu.add_command(label = 'Draw', command = drawImage)
-editmenu.add_command(label = 'Adjust', command = adjustImage)
-# editmenu.add_comand(label = 'Clear', command = clearImage)
-
+editmenu.add_command(label='Draw', command=drawImage)
+editmenu.add_command(label='Adjust', command=adjustImage)
+editmenu.add_comand(label='Clear', command=clearImage)
 
 root.mainloop()
