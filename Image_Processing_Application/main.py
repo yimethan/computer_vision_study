@@ -65,14 +65,11 @@ filemenu.add_command(label='Save As...', command=saveImage)
 def cropOk():
     global curSizeLabel, curImg, temp, rowEntryFrom, rowEntryTo, columnEntryFrom, columnEntryTo
 
-    temp = curImg.copy()
     tempArr = np.array(temp)
 
     row1, row2 = int(rowEntryFrom.get()), int(rowEntryTo.get())
     col1, col2 = int(columnEntryFrom.get()), int(columnEntryTo.get())
     tempArr = tempArr[row1:row2, col1:col2]
-    if row1 < 0 or row2 > curImg.height() or col1 < 0 or row2 > curImg.width():
-        return
 
     temp = Image.fromarray(tempArr)
     width, height = temp.width, temp.height
@@ -98,6 +95,8 @@ def cropApply():
 def cropImage():
     global curImg, curHeight, curWidth, curSizeLabel, cropWindow, temp
     global rowEntryFrom, rowEntryTo, columnEntryFrom, columnEntryTo
+
+    temp = curImg.copy()
 
     cropWindow = Toplevel(root)
     cropWindow.title('Crop')
