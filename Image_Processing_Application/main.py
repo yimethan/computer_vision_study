@@ -62,16 +62,17 @@ menubar.add_cascade(label='File', menu=filemenu)
 filemenu.add_command(label='Open', command=openImage)
 filemenu.add_command(label='Save As...', command=saveImage)
 
-
-
 def cropOk():
-    global curSizeLabel, temp, rowEntryFrom, rowEntryTo, columnEntryFrom, columnEntryTo
+    global curSizeLabel, curImg, temp, rowEntryFrom, rowEntryTo, columnEntryFrom, columnEntryTo
 
+    temp = curImg.copy()
     tempArr = np.array(temp)
 
     row1, row2 = int(rowEntryFrom.get()), int(rowEntryTo.get())
     col1, col2 = int(columnEntryFrom.get()), int(columnEntryTo.get())
     tempArr = tempArr[row1:row2, col1:col2]
+    if row1 < 0 or row2 > curImg.height() or col1 < 0 or row2 > curImg.width():
+        return
 
     temp = Image.fromarray(tempArr)
     width, height = temp.width, temp.height
@@ -89,7 +90,6 @@ def cropApply():
     global cropWindow, temp, curImg, curHeight, curWidth
 
     curImg = temp.copy()
-
     curHeight, curWidth = temp.height, temp.width
     displayImage(curImg, curWidth, curHeight)
     cropWindow.destroy()
@@ -98,8 +98,6 @@ def cropApply():
 def cropImage():
     global curImg, curHeight, curWidth, curSizeLabel, cropWindow, temp
     global rowEntryFrom, rowEntryTo, columnEntryFrom, columnEntryTo
-
-    temp = curImg.copy()
 
     cropWindow = Toplevel(root)
     cropWindow.title('Crop')
@@ -147,10 +145,6 @@ def cropImage():
     curSizeLabel = Label(cropWindow, text='Current(h, w) = ' + str(curHeight) + ', ' + str(curWidth))
     curSizeLabel.place(x=100, y=550)
     curSizeLabel.pack()
-
-
-
-
 
 def cancelFilter():
     global filterWindow, curImg, curWidth, curHeight, temp
@@ -273,9 +267,6 @@ def filterImage():
     cancelButton = Button(filterWindow, text='Cancel', command=cancelFilter)
     cancelButton.pack()
 
-
-
-
 def cancelDraw():
     global canvas, drawWindow, curWidth, curHeight, curImg, temp
 
@@ -318,55 +309,28 @@ def drawImage():
     applyDrawButton = Button(drawWindow, text='Apply', command=applyDraw)
     applyDrawButton.pack()
 
-
-
-def adjustImage():
-    global adjustWindow, temp, curImg
-
-    temp = curImg.copy()
-    tempArr = np.array(temp)
-
-    adjustWindow = Toplevel(root)
-    adjustWindow.title('Adjust')
-
-    rVal = IntVar()
-    rLabel = Label(adjustWindow, text='R')
-    rLabel.pack()
-    rScale = Scale(adjustWindow, variable=rVal, from_=-50, to=50, length=100, orient='horizontal')
-    rScale.pack()
-    gVal = IntVar()
-    gLabel = Label(adjustWindow, text='G')
-    gLabel.pack()
-    gScale = Scale(adjustWindow, variable=gVal, from_=-50, to=50, length=100, orient='horizontal')
-    gScale.pack()
-    bVal = IntVar()
-    bLabel = Label(adjustWindow, text='B')
-    bLabel.pack()
-    bScale = Scale(adjustWindow, variable=bVal, from_=-50, to=50, length=100, orient='horizontal')
-    bScale.pack()
-
-    hVal = IntVar()
-    hLabel = Label(adjustWindow, text='Hue')
-    hLabel.pack()
-    hScale = Scale(adjustWindow, variable=hVal, from_=-50, to=50, length=100, orient='horizontal')
-    hScale.pack()
-    sVal = IntVar()
-    sLabel = Label(adjustWindow, text='Saturation')
-    sLabel.pack()
-    sScale = Scale(adjustWindow, variable=sVal, from_=-50, to=50, length=100, orient='horizontal')
-    sScale.pack()
-    vVal = IntVar()
-    vLabel = Label(adjustWindow, text='Value')
-    vLabel.pack()
-    vScale = Scale(adjustWindow, variable=vVal, from_=-50, to=50, length=100, orient='horizontal')
-    vScale.pack()
-
 def cancelAdjust():
     global temp, curImg, curWidth, curHeight, adjustWindow
 
     temp = None
     adjustWindow.destroy()
     displayImage(curImg, curWidth, curHeight)
+
+def okAdjust():
+    global temp, curImg, curWidth, curHeight, adjustWindow, rVal, gVal, bVal
+
+    temp = curImg.copy()
+    tempArr = np.array(temp)
+    tempArr = cv2.cvtColor(tempArr, cv2.COLOR_BGR2RGB)
+    tempArr[:,:,0] = tempArr[:,:,0] + rVal.get()
+    tempArr[:,:,1] = tempArr[:,:,1] + gVal.get()
+    tempArr[:,:,2] = tempArr[:,:,2] + bVal.get()
+    tempArr[np.where(tempArr > 255)] = 255
+    tempArr[np.where(tempArr < 0)] = 0
+
+    tempArr = cv2.cvtColor(tempArr, cv2.COLOR_BGR2RGB)
+    temp = Image.fromarray(tempArr)
+    displayImage(temp, width=curWidth, height=curHeight)
 
 def applyAdjust():
     global temp, curImg, curWidth, curHeight, adjustWindow
@@ -376,21 +340,41 @@ def applyAdjust():
     adjustWindow.destroy()
     displayImage(curImg, width=curWidth, height=curHeight)
 
+def adjustImage():
+    global adjustWindow, rVal, gVal, bVal, temp, curImg, curWidth, curHeight
+
+    rVal, gVal, bVal = IntVar(), IntVar(), IntVar()
+
+    adjustWindow = Toplevel(root)
+    adjustWindow.title('Adjust')
+
+    rLabel = Label(adjustWindow, text='R')
+    rLabel.pack()
+    rScale = Scale(adjustWindow, variable=rVal, from_=-100, to=100, length=200, orient='horizontal')
+    rScale.pack()
+    gLabel = Label(adjustWindow, text='G')
+    gLabel.pack()
+    gScale = Scale(adjustWindow, variable=gVal, from_=-100, to=100, length=200, orient='horizontal')
+    gScale.pack()
+    bLabel = Label(adjustWindow, text='B')
+    bLabel.pack()
+    bScale = Scale(adjustWindow, variable=bVal, from_=-100, to=100, length=200, orient='horizontal')
+    bScale.pack()
+
+    okButton = Button(adjustWindow, text='OK', command=okAdjust)
+    okButton.pack()
     cancelButton = Button(adjustWindow, text='Cancel', command=cancelAdjust)
     cancelButton.pack()
     applyButton = Button(adjustWindow, text='Apply', command=applyAdjust)
     applyButton.pack()
-
-
-
 
 def clearImage():
     global curImg, temp, curWidth, curHeight, originalImg, oriWidth, oriHeight
 
     curImg = originalImg.copy()
     temp = None
-    curWidth = oriWidth.width()
-    curHeight = oriHeight.height()
+    curWidth = oriWidth
+    curHeight = oriHeight
     displayImage(curImg, width=curWidth, height=curHeight)
 
 editmenu = Menu(menubar, tearoff=0)
@@ -399,6 +383,6 @@ editmenu.add_command(label='Crop', command=cropImage)
 editmenu.add_command(label='Filter', command=filterImage)
 editmenu.add_command(label='Draw', command=drawImage)
 editmenu.add_command(label='Adjust', command=adjustImage)
-editmenu.add_comand(label='Clear', command=clearImage)
+editmenu.add_command(label='Clear', command=clearImage)
 
 root.mainloop()
