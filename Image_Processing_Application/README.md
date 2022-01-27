@@ -32,6 +32,8 @@
 
 ![save](-/save.gif)
 
+<img src="-/saved_img.jpg" alt="saved" width="200"/>
+
 1. Select File > Save As...
 2. Enter the filename & directory
 3. Click Save
