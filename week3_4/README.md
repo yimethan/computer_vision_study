@@ -47,3 +47,43 @@ For high level performance, you need
       ![sigmoid](https://t1.daumcdn.net/cfile/tistory/275BAD4F577B669920)
     + gradient nearly 0, learning becomes slow
         ![relu](https://miro.medium.com/max/1838/1*LiBZo_FcnKWqoU7M3GRKbA.png)
+
+
+## __Logistic Regression__ as a Neural Network
+
+### Logistic Regression for `Binary Classification`
+
++ Give an image represented as X as the input and train the classifier &rarr; Predict if the output label y is rather 0 or 1
++ Given X, want ŷ to be P(y=1|x)
+
+__ŷ = σ(ω<sup>T</sup>x+b), where σ(z) = 1/1+e<sup>-z</sup> (Z = ω<sup>T</sup>x+b)__
+
+```
+x, ω : dimensional vector
+b : real number
+```
+
++ ŷ<sup>(i)</sup> = σ(ω<sup>T</sup>x<sup>(i)</sup>+b), where σ(Z<sup>(i)</sup>) = 1/1+e<sup>-z<sup>(i)</sup></sup> (Z<sup>(i)</sup> = ω<sup>T</sup>x<sup>(i)</sup>+b)
+
+  + Given { (x<sup>(1)</sup>, y<sup>(1)</sup>), (x<sup>(2)</sup>, y<sup>(2)</sup>), ... , (x<sup>(i)</sup>, y<sup>(i)</sup>) }
+  + want ŷ<sup>(i)</sup> ≈ y<sup>(i)</sup>
+
+### __Loss(error) function__
+
+𝐿(ŷ, y) = 1/2(ŷ - y)<sup>2</sup> &rarr; (x), optimization problem
+
+In Logistic Regression &rarr; __𝑳(ŷ, y) = -(ylogŷ + (1-y)log(1-ŷ))__
+
++ If y = 1, 𝐿(ŷ, y) = -logŷ
+  + want logŷ to be large
+  + want ŷ to be large
+
++ If y = 0, 𝐿(ŷ, y) = -log(1-ŷ)
+  + want log(1-ŷ) to be large
+  + want ŷ to be small
+
+### __Cost function__
+
++ Measures how you're doing on the entire training set
+
+<img src="-/cost_func.png" alt="costfunc" width="400"/>
