@@ -233,6 +233,7 @@ ex.
 
 ### __Implementing Logistic Regression__
 
+
 Z = np.dot(w<sup>T</sup>, x) + b
 
 A = σ(Z)
