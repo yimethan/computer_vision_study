@@ -243,3 +243,37 @@ dZ = A - Y
 dw = (1/m)*dZ<sup>T</sup>
 
 db = (1/m)*np.sum(dZ)
+
+# Deep Neural Network
+
+layer &uarr;&uarr; : deep NN
+
+## Why deep NN works well?
+
++ lower level simple features in small area &rarr; detect more complex things
+
+L : number of layers
+
+n<sup>[_l_]</sup> = number of units in layer
+
+a<sup>[_l_]</sup> = activations in layer _l_
+
+w<sup>[_l_]</sup> = weights for z<sup>[_l_]</sup>
+
+## Forward propagation
+
+z<sup>[_l_]</sup> = w<sup>[_l_]</sup>a<sup>[_l-1_]</sup> + b<sup>[_l_]</sup>
+
+a<sup>[_l_]</sup> = g<sup>[_l_]</sup>(z<sup>[_l_]</sup>)
+
+__vectorize__
+
+Z<sup>[1]</sup> = W<sup>[1]</sup>X + b<sup>[1]</sup> (X = A<sup>[0]</sup>)
+
+A<sup>[1]</sup> = g<sup>[1]</sup>(Z<sup>[1]</sup>)
+
+Z<sup>[2]</sup> = W<sup>[2]</sup>A<sup>[1]</sup> + b<sup>[2]</sup>
+
+A<sup>[2]</sup> = g<sup>[2]</sup>(Z<sup>[2]</sup>)
+
+...
