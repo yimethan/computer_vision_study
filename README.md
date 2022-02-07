@@ -21,7 +21,7 @@ More:
 
 
 Week 3 - 4:
-- [ ] - Watch lectures week 1,2 on https://www.coursera.org/learn/neural-networks-deep-learning.
+- [x] - Watch lectures week 1,2 on https://www.coursera.org/learn/neural-networks-deep-learning.
 
 
 Week 5 - 6:
