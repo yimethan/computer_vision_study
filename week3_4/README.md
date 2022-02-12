@@ -2,12 +2,11 @@
 
 ## Neural Network
 
-![neural_network](./-/neural_network.png)
+<img src="-/neural_network.png" alt="neural_network" width="600"/>
 
 + Stack single neurons &rarr; Larger neural network
 
-
-![neural_network](https://www.tibco.com/sites/tibco/files/media_entity/2021-05/neutral-network-diagram.svg)
+<img src="https://www.tibco.com/sites/tibco/files/media_entity/2021-05/neutral-network-diagram.svg" alt="neural_network" width="600"/>
 
 + Each of hidden units takes its inputs all input features
 
@@ -27,7 +26,7 @@ __To manage neural network__
 
 ## Why is Deep Learning taking off?
 
-![graph](./-/graph.jpeg)
+<img src="-/graph.jpeg" alt="graph" width="400"/>
 
 For high level performance, you need
 
@@ -44,9 +43,9 @@ For high level performance, you need
     4. repeat in cycle
 + `algorithms` : making NN run much faster
   + ex. Sigmoid function &rarr; ReLU function
-      ![sigmoid](https://t1.daumcdn.net/cfile/tistory/275BAD4F577B669920)
-    + gradient nearly 0, learning becomes slow
-        ![relu](https://miro.medium.com/max/1838/1*LiBZo_FcnKWqoU7M3GRKbA.png)
+  + <img src="https://t1.daumcdn.net/cfile/tistory/275BAD4F577B669920" alt="sigmoid" width="400"/>
+  + gradient nearly 0, learning becomes slow
+  + <img src="https://miro.medium.com/max/1838/1*LiBZo_FcnKWqoU7M3GRKbA.png" alt="relu" width="400"/>
 
 
 ## __Logistic Regression__ as a Neural Network
@@ -63,16 +62,16 @@ x, w : dimensional vector
 b : real number
 ```
 
-+ ŷ<sup>(i)</sup> = σ(w<sup>T</sup>x<sup>(i)</sup>+b), where σ(Z<sup>(i)</sup>) = 1/1+e<sup>-z<sup>(i)</sup></sup> (Z<sup>(i)</sup> = w<sup>T</sup>x<sup>(i)</sup>+b)
++ ŷ<sup>(i)</sup> = σ(w<sup>T</sup>x<sup>(i)</sup>+b), where σ(z<sup>(i)</sup>) = 1/1+e<sup>-z<sup>(i)</sup></sup> (Z<sup>(i)</sup> = w<sup>T</sup>x<sup>(i)</sup>+b)
 
-  + Given { (x<sup>(1)</sup>, y<sup>(1)</sup>), (x<sup>(2)</sup>, y<sup>(2)</sup>), ... , (x<sup>(i)</sup>, y<sup>(i)</sup>) }
+  + Given { (x<sup>(1)</sup>, y<sup>(1)</sup>), (x<sup>(2)</sup>, y<sup>(2)</sup>), ... , (x<sup>(m)</sup>, y<sup>(m)</sup>) }
   + want ŷ<sup>(i)</sup> ≈ y<sup>(i)</sup>
 
 ### __Loss(error) function__
 
 + Measures how well the algorithm outputs
 
-𝐿(ŷ, y) = 1/2(ŷ - y)<sup>2</sup> &rarr; (x), optimization problem
+𝐿(ŷ, y) = 1/2(ŷ - y)<sup>2</sup> &rarr; optimization problem
 
 In Logistic Regression &rarr; __𝑳(ŷ, y) = -(ylogŷ + (1-y)log(1-ŷ))__
 

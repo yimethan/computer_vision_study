@@ -2,11 +2,11 @@
 
 ## Neural network
 
-![nn](-/neural_network.jpg)
+<img src="-/neural_network.jpg" alt="nn" width="500"/>
 
 ## Vectorizing
 
-![vectorizing](-/vectorize.jpg)
+<img src="-/vectorize.jpg" alt="vectorizing" width="500"/>
 
 ## Activation Functions
 
@@ -15,11 +15,11 @@
 
 ### 1. Sigmoid function
 
-![sigmoid](https://t1.daumcdn.net/cfile/tistory/275BAD4F577B669920)
+<img src="https://t1.daumcdn.net/cfile/tistory/275BAD4F577B669920" alt="sigmoid" width="400"/>
 
 ### 2. tanh(z)
 
-![tanhz](https://www.oreilly.com/library/view/machine-learning-with/9781789346565/assets/c9014c8e-7d06-4a12-9390-4d17f9379eb9.png)
+<img src="https://www.oreilly.com/library/view/machine-learning-with/9781789346565/assets/c9014c8e-7d06-4a12-9390-4d17f9379eb9.png" alt="tanhz" width="400"/>
 
 + shifted version of sigmoid function
 + Pro: the activation mean of hidden layer is near to 0 &rarr; centers the data &rarr; makes learning in the next layer easier
@@ -27,17 +27,17 @@
   + output layer has value between 0 & 1 but tanh(z) has value between -1 & 1
 + Con: when z is very big or small, derivative becomse very small
 
-3. ReLU
+1. ReLU
 
-![relu](https://blog.kakaocdn.net/dn/vgJna/btqQzRGmwcO/TK3KTMlz4CYag8rBTKfYkK/img.png)
+<img src="https://blog.kakaocdn.net/dn/vgJna/btqQzRGmwcO/TK3KTMlz4CYag8rBTKfYkK/img.png" alt="relu" width="400"/>
 
 + Pro: much faster than sigmoid / tanh
 + Con: if z < 0, derivative = 0
 + default choice of activation func
 
-4. leaky ReLU
+1. leaky ReLU
 
-![leakyrelu](https://miro.medium.com/max/2050/1*siH_yCvYJ9rqWSUYeDBiRA.png)
+<img src="https://miro.medium.com/max/2050/1*siH_yCvYJ9rqWSUYeDBiRA.png" alt="leakyrelu" width="400"/>
 
 + Pro: for a lot of space of z, the derivative of the activation func is not 0
 
