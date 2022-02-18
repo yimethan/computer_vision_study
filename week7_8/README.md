@@ -297,15 +297,99 @@ Instead of V<sub>t</sub>, use V<sub>t</sub>/(1-β<sup>t</sup>)
 
 + as t gets larger, β<sup>t</sup> gets closer to 0
 
-## Gradient Descent with Momentum
+## Better optimization algorithms
 
-## RMSprop
+### Gradient Descent with Momentum
 
-## Adam Optimization Algorithm
++ to compute exponentially weighted average of gradients, then use grad to upgrade weights
++ larger learning rate = oscillations
+  + slow down grad descent
+  + prevent using larger learning rate
++ on vertical axis, want learning to be slower because want to get rid of oscillations
++ on horizontal axis, want learning to be faster
+
+on iteration t:
++ compute dw, db on current mini-batch
++ Vdw = βVdw + (1-β)dw
++ Vdb = βVdb + (1-β)db
+  + β : friction(commonly set to 0.9), dw & db : acceleration to a bowl to roll downhill
++ w := w - αVdw, b := b - αVdb
+  + to smooth out the steps of grad descent
+
+### RMSprop
+
++ root mean square prop
++ enables to use larger learning rate
+
+on iteration t:
++ compute dw, db on current mini-batch
++ Sdw = βSdw + (1-β)dw<sup>2</sup>
+  + keeping exponentially weighted average of the wquares of the derivatives
++ Sdb = βSdb + (1-β)db<sup>2</sup>
+  + element-wise
++ w := w - α * dw/sqrt(Sdw + ε)
++ b := b - α * db/sqrt(Sdb + ε)
+  + Sdw should be relatively small and Sdb should be relatively large
+  + plus ε to prevent w and b from exploding
+
+### Adam Optimization Algorithm
+
++ momentum + RMSprop
+
+Vdw = 0, Vdb = 0, Sdw = 0, Sdb = 0
+on iteration t:
++ compute dw, db using current mini-batch
++ Vdw = β<sub>1</sub>Vdw + (1-β<sub>1</sub>)dw
++ Vdb = β<sub>1</sub>Vdb + (1-β<sub>1</sub>)db
++ Sdw = β<sub>2</sub>Sdw + (1-β<sub>2</sub>)dw<sup>2</sup>
++ Sdb = β<sub>2</sub>Sdb + (1-β<sub>2</sub>)db<sup>2</sup>
++ Vdw<sup>corrected</sup> = Vdw / (1-β<sub>1</sub><sup>t</sup>)
++ Vdb<sup>corrected</sup> = Vdb / (1-β<sub>1</sub><sup>t</sup>)
++ Sdw<sup>corrected</sup> = Sdw / (1-β<sub>2</sub><sup>t</sup>)
++ Sdb<sup>corrected</sup> = Sdb / (1-β<sub>2</sub><sup>t</sup>)
++ w := w - α * Vdw<sup>corrected</sup>/sqrt(Sdw<sup>corrected</sup> + ε)
++ b := b - α * Vdb<sup>corrected</sup>/sqrt(Sdb<sup>corrected</sup> + ε)
+
+__hyperparams__
+
++ α: needs to be tuned
++ β<sub>1</sub>: 0.9
++ β<sub>2</sub>: 0.999
++ ε: 10<sup>-8</sup>
 
 ## Learning Rate Decay
 
+<img src="https://miro.medium.com/max/1400/1*Mbf-EvrLScSbQlyXU3xQSg.png" width=400>
+
++ slowly reduce learning rate over time &rarr; speed up learning algorithm
++ prevents wandering around the min but never converging when α is fixed
++ make α smaller &rarr; end up oscillating in tight region around min
+
+1. Set α = α<sub>0</sub>/1+(decay rate)*(epoch number), 
+α<sub>0</sub> = initial learning rate
+
+2. α = 0.95 * α<sub>0</sub>
+
+3. α = k * α<sub>0</sub> / sqrt(epoch number)
+
+4. Discrete staircase: α - t value paired
+
+5. Manual decay
+
 ## The Problem of Local Optima
+
+`local optima`
+
+<img src="https://www.researchgate.net/profile/Filippo-Venezia/publication/309033247/figure/fig2/AS:670011102351374@1536754503899/Global-and-local-optima-in-a-search-space-R-n-The-position-on-the-X-and-Y-axis.jpg" width=500>
+
+What if we get caught in a local optima?
+
++ but pretty unlikely to get stuck in a bad local optima
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Saddle_point.svg/1200px-Saddle_point.svg.png" width=500>
+
++ PLEATEAU: when going downwards along the pleateau towards the saddle point, training is slow
++ after reaching the saddle point, it will get off the leateau
 
 # Hyperparameter Tuning, Batch Normalization and Programming Frameworks
 
@@ -313,24 +397,109 @@ Instead of V<sub>t</sub>, use V<sub>t</sub>/(1-β<sup>t</sup>)
 
 ### Tuning Process
 
+1. Try random values(defining a search space as a bounded domain of hyperparameter values and randomly sampling points in the domain) rather than using a grid(defining a search space as a grid of hyperparameter values and evaluating every position in the grid)
+2. Coarse to fine
+   1. Coarse sample of the entire domain
+   2. sample more densely into smaller domain
+
 ### Using an Appropriate Scale to pick Hyperparpameters
 
-### Hyperparameters Tuing in Practice: Pandas vs. Caviar
+1. α learning rate: search on a log scale instead of linear scale
+    + distribute samples uniformly at random in a logarithmic scale of value range
+
+Implementing in Python
+
+```python
+r = -4 * np.random.rand()
+# [-4, 0]
+alpha = 10 ** r
+# if sampling 10 ** a ... 10 ** b,
+# a = log0.0001 -> a = -4
+# b = log1 -> b = 0
+```
+
+2. β (when computing exponentially weighted average)
+    + expore values of 1-β
+    + 1-β = 10<sup>r</sup>
+    + β = 1 - 10<sup>r</sup>
+
+ex. when suspecting β to be [0.9, 0.999], 1-β is between 0.1~0.001
+
+0.1 = 10<sup>-1</sup>, 0.01 = 10<sup>-2</sup>, 0.001 = 10<sup>-3</sup>
+
+r ∈ [-3, -1]
+
+### Hyperparameters Tuning in Practice
+
++ Babysitting one model
+  + when data set is huge but not lots of computational resources / CPUs & GPUs
+  + training one/very small num of models at a time
++ Training many models in parallel
+  + can try lots of different hyperparam settings and quickly pick the best one at the end
 
 ## Batch Normalization
 
-### Normalizing Actications in a Network
++ technique to make hyperparameter search much easier and training go much faster
 
-### Fitting Batch Norm into a NN
+### Normalizing Activations in a Network
 
-## Multi=class Classification
+__Batch norm in a single layer in NN__
+
+Given some intermediate values in NN z<sup>[ℓ] (1)</sup>, ..., z<sup>[ℓ] (m)</sup>,
+
+<img src="-/znorm.png" width=150>
+
+all z's have mean 0 & var 1
+
+but hidden units shoudn't all have mean 0 & var 1
+
+so make them have different distribution
+
+z̃<sup>(i)</sup> = γz<sup>(i)</sup><sub>normalized</sub> + β
+
+&rarr; update γ & β using grad descent or momentum, RMSprop, ...
+
+If γ = sqrt(σ<sup>2</sup> + ε) and β = μ, z̃<sup>(i)</sup> = z<sup>(i)</sup> &rarr; avoid these values
+
+__Mini-batch norm in NN__
+
+for t=1~#mini-batches:
++ compute forward prop on X<sup>{t}</sup>
+  + in each hidden layer, use batch norm to replace z<sup>[l]</sup>, W, z̃<sup>[l]</sup>
++ use backprop to compute dW<sup>[l]</sup>, dβ<sup>[l]</sup>, dγ<sup>[l]</sup>
++ update params
+  + W<sup>[l]</sup> := W<sup>[l]</sup> - αdW<sup>[l]</sup>
+  + ...
+
+1. take similar range of values of all features by normalizing &rarr; speed up learning
+
+2. batch norm allows mean & variance(0 & 1 governed by β & γ) to remain the same after covariate shift
+
+3. slight regulation effect
+
+__Batch norm at test time__
+
++ Training: μ & σ<sup>2</sup> computed on an entire mini-batch of 64/128/... examples
++ Test: single sample at a time by implemening exponentially weighted average; keeping trakck of μ & σ<sup>2</sup> during training and use these μ & σ<sup>2</sup> values to do the scale
+
+## Multi-class Classification
 
 ### Softmax Regression
 
+: generalization of logistic regression
+
+<img src="-/multi.png" width=600>
+
+P(other|x) + P(cat|x) + P(dog|x) + P(chick|x) = 1
+
+C: num of class, n<sup>[l]</sup> = C
+
+__Activation function__
+
+<img src="-/t.png" width=110>
+
 ### Training a Softmax Classifier
 
-## Introduction to Programming Frameworks
+<img src="-/if.png" width=170>
 
-### Deep Learning Frameworks
-
-#### TensorFlow
+&rarr; 0.0842 is max
