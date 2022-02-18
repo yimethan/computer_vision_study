@@ -145,7 +145,7 @@ X = X - µ (for every training example)
 ### Vanishing / Exploding Gradients
 
 + When training very deep network, derivatives can get either very big/small, making training difficult
-+ &rarr; choose random w initializatoin carefully to reduce this problem
++ &rarr; choose random w initialization carefully to reduce this problem
 
 + if w's are all a little bigger than 1 or the identity matrix, then with a very deep NN, the activations can explode
 + if w is little less than identity, with a very deep NN, the activations will decrease exponentially
@@ -187,7 +187,7 @@ __Practical tips of implementing grad checking__
 
 1. Don't use in training - only to debug 
    + Grad checking is a very slow computation so to implement grad descent, just use back prop to compute dθ
-2. If algorithm fails grad check, look at components to try to identify bu of dθ<sub>approx</sub><sup>[i]</sup> is far from dθ, look at different values of i to see which are the values of dθ<sub>approx</sub><sup>[i]</sup>
+2. If algorithm fails grad check, look at components to try to identify bug if dθ<sub>approx</sub><sup>[i]</sup> is far from dθ, look at different values of i to see which are the values of dθ<sub>approx</sub><sup>[i]</sup>
    +  those values came from dW<sup>[l]</sup> of a certain layer
 3. Doesn't work with Dropout
    + set keep_prob = 1.0
