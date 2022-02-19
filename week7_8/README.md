@@ -185,10 +185,17 @@ for each i:
 
 __Practical tips of implementing grad checking__
 
+<<<<<<< HEAD
 1. Don't use in training - only to debug
 + Grad checking is a very slow computation so to implement grad descent, just use back prop to compute dθ
 2. If algorithm fails grad check, look at components to try to identify bu of dθ<sub>approx</sub><sup>[i]</sup> is far from dθ, look at different values of i to see which are the values of dθ<sub>approx</sub><sup>[i]</sup>
 + those values came from dW<sup>[l]</sup> of a certain layer
+=======
+1. Don't use in training - only to debug 
+   + Grad checking is a very slow computation so to implement grad descent, just use back prop to compute dθ
+2. If algorithm fails grad check, look at components to try to identify bug if dθ<sub>approx</sub><sup>[i]</sup> is far from dθ, look at different values of i to see which are the values of dθ<sub>approx</sub><sup>[i]</sup>
+   +  those values came from dW<sup>[l]</sup> of a certain layer
+>>>>>>> 1b5ee5ed064c601629b1618abde306f451c3a759
 3. Doesn't work with Dropout
 + set keep_prob = 1.0
 4. Back prop implementation might be incorrect when w, b are big, so run grad check at random initialization & train the network for a while so that w, b have some time to wander away from the initial values, then grad check again after training for some numbers of iterations
