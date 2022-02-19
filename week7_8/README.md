@@ -29,13 +29,13 @@ Big Data era: 1M/10K(big enough)/10K = 98/1/1
 ### Basic Recipe for ML
 
 1. If high bias
-  + bigger network
-  + train longer
-  + find better network architecture suited for this problem
++ bigger network
++ train longer
++ find better network architecture suited for this problem
 2. If high variance
-  + more data
-  + regularization
-  + find better network architecture suited for this problem
++ more data
++ regularization
++ find better network architecture suited for this problem
 
 ## Regularizing NN
 
@@ -43,15 +43,15 @@ Big Data era: 1M/10K(big enough)/10K = 98/1/1
 일반화, 정규화
 
 + to tune function by adding additional penalty term in the cost function
-+ reduces `overfitting` (high variance)
++ reduces 'overfitting' (high variance)
 
-**Implementing `L2 Regularization` for Logistic Regression**
+**Implementing 'L2 Regularization' for Logistic Regression**
 
 <img src="-/J.png" width=500>
 
-+ Penalizes w matrices from beign too large
++ Penalizes w matrices from being too large
 + Frobenious norm of matrix w : sum of square of elements of matrix w
-  
+
 <img src="-/w.png" width=250>
 
 + Row i of the matrix = #neurons in current layer; n<sup>[l]</sup>
@@ -66,21 +66,21 @@ __Implementing Gradient Descent__
 2. <img src="-/w[l].png" width=130>
 
 + L2 regulation = 'Weight Decay'
-  + w(1-αλ/m), makes w to be a little smaller
++ w(1-αλ/m), makes w to be a little smaller
 
 ### Why Regularization Reduces Overfitting?
 
 1. If λ is set as a large value, w will be set as a number close to 0
-   + NN is simplified by reducing impacts of hidden units, the NN becomes as if logistic regression is deeply stacked
++ NN is simplified by reducing impacts of hidden units, the NN becomes as if logistic regression is deeply stacked
 
 2. When g(z)=tanh(z) and z is quite small = using tanh's linear part
-   + <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Hyperbolic_Tangent.svg/735px-Hyperbolic_Tangent.svg.png?20090905154026" width=500>
-   + Every layer = roughly linear &rarr; the whole network = linear network
-   + Unable to fit complicated decision (overfit)
++ <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Hyperbolic_Tangent.svg/735px-Hyperbolic_Tangent.svg.png?20090905154026" width=500>
++ Every layer = roughly linear &rarr; the whole network = linear network
++ Unable to fit complicated decision (overfit)
 
 ### Dropout Regularization
 
-`Dropout`
+'Dropout'
 + Stronger regularization technique than L2
 + Going through each layer and set possibility of eliminating a node in NN
 
@@ -88,7 +88,7 @@ __Implementing Dropout__
 
 1. Inverted Dropout: the most common way
 
-```python
+'''python
 d3 = np.random.rand(a3.shape[0], a3.shape[1]) < keep_prob
 #vector d3 : dropout vector of layer 3
 # same shape as a3
@@ -100,12 +100,12 @@ a3 *= d3
 a3 /= keep_prob
 # in z = wa + b, a is reduced
 # to not reduce value of z, bump up back a3
-```
+'''
 ex. 50 units in 3rd hidden layer, a3 is (50, 1) vector, keep_prob = 0.8 (0.2 chance of eliminating any hidden unit)
 
 &rarr; 10 units zeroed out
 
-+ Units have possibilities of getting eliminated so weights should be spreaded out rather than focused to specific units
++ Units have possibilities of getting eliminated so weights should be spread out rather than focused on specific units
 + vs L2 regulation: applying to different weights and adaptive to different inputs
 + Can set keep_prob different for each layer
 
@@ -113,10 +113,10 @@ ex. 50 units in 3rd hidden layer, a3 is (50, 1) vector, keep_prob = 0.8 (0.2 cha
 
 1. If getting more data is unable, make distortions & translations of images - make random crops of the image by flipping or rotating then add them to the training set
 2. Early stopping
-   1. as running gradient descent, plot training error & devset error
-   2. If haven't run many iterations, w is close to w; stopping when w has the mid-size rate will minimize dev set error
-   + <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FqbkHk%2Fbtq2QUJ2zf1%2FMpqJihqkJmSsTI0nY5Irj1%2Fimg.png" width=300>
-   + CON: no longer can work computing w, b that minimizes cost function J and reducing variance to prevent overfitting independently
+1. as running gradient descent, plot training error & devset error
+2. If haven't run many iterations, w is close to w; stopping when w has the mid-size rate will minimize dev set error
++ <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FqbkHk%2Fbtq2QUJ2zf1%2FMpqJihqkJmSsTI0nY5Irj1%2Fimg.png" width=300>
++ CON: no longer can work computing w, b that minimizes cost function J and reducing variance to prevent overfitting independently
 
 ## Setting up Optimization Problem
 
@@ -145,7 +145,7 @@ X = X - µ (for every training example)
 ### Vanishing / Exploding Gradients
 
 + When training very deep network, derivatives can get either very big/small, making training difficult
-+ &rarr; choose random w initializatoin carefully to reduce this problem
++ &rarr; choose random w initialization carefully to reduce this problem
 
 + if w's are all a little bigger than 1 or the identity matrix, then with a very deep NN, the activations can explode
 + if w is little less than identity, with a very deep NN, the activations will decrease exponentially
@@ -155,15 +155,15 @@ X = X - µ (for every training example)
 
 + If ReLU,
 
-W<sup>[l]</sup> = np.random.randn(`shape`) * np.sqrt(2/n<sup>[l-1]</sup>)
+W<sup>[l]</sup> = np.random.randn('shape') * np.sqrt(2/n<sup>[l-1]</sup>)
 
 + If tanh, (Xavier initialization)
 
-W<sup>[l]</sup> = np.random.randn(`shape`) * np.sqrt(1/n<sup>[l-1]</sup>)
+W<sup>[l]</sup> = np.random.randn('shape') * np.sqrt(1/n<sup>[l-1]</sup>)
 
 or
 
-W<sup>[l]</sup> = np.random.randn(`shape`) * np.sqrt(1/(n<sup>[l-1]</sup>+n<sup>[l]</sup>))
+W<sup>[l]</sup> = np.random.randn('shape') * np.sqrt(1/(n<sup>[l-1]</sup>+n<sup>[l]</sup>))
 
 ### Gradient Checking
 
@@ -185,12 +185,12 @@ for each i:
 
 __Practical tips of implementing grad checking__
 
-1. Don't use in training - only to debug 
-   + Grad checking is a very slow computation so to implement grad descent, just use back prop to compute dθ
+1. Don't use in training - only to debug
++ Grad checking is a very slow computation so to implement grad descent, just use back prop to compute dθ
 2. If algorithm fails grad check, look at components to try to identify bu of dθ<sub>approx</sub><sup>[i]</sup> is far from dθ, look at different values of i to see which are the values of dθ<sub>approx</sub><sup>[i]</sup>
-   +  those values came from dW<sup>[l]</sup> of a certain layer
++ those values came from dW<sup>[l]</sup> of a certain layer
 3. Doesn't work with Dropout
-   + set keep_prob = 1.0
++ set keep_prob = 1.0
 4. Back prop implementation might be incorrect when w, b are big, so run grad check at random initialization & train the network for a while so that w, b have some time to wander away from the initial values, then grad check again after training for some numbers of iterations
 
 # Optimization Algorithms
@@ -228,10 +228,10 @@ y<sup>(1)</sup> ~ y<sup>(1000)</sup> = Y<sup>{1}</sup> (1, 1000)
 
 for t=1~5000:
 + forward prop on X<sup>{t}</sup>
-  + Z<sup>[1]</sup> = W<sup>[1]</sup>X<sup>{t}</sup> + b<sup>[1]</sup>
-  + A<sup>[1]</sup> = g<sup>[1]</sup>(Z<sup>[1]</sup>)
-  + ...
-  + A<sup>[L]</sup> = g<sup>[L]</sup>(Z<sup>[L]</sup>)
++ Z<sup>[1]</sup> = W<sup>[1]</sup>X<sup>{t}</sup> + b<sup>[1]</sup>
++ A<sup>[1]</sup> = g<sup>[1]</sup>(Z<sup>[1]</sup>)
++ ...
++ A<sup>[L]</sup> = g<sup>[L]</sup>(Z<sup>[L]</sup>)
 + compute cost func J<sup>{t}</sup>
 + back prop to compute grad w respect to J<sup>{t}</sup> (using X<sup>{t}</sup>, Y<sup>{t}</sup>)
 + W<sup>[l]</sup> := W<sup>[l]</sup> - αdW<sup>[l]</sup>
@@ -241,13 +241,13 @@ __Batch grad descent__
 + 1 pass through training set = 1 grad descent step
 + cost should go down on every iteration
 
-__Mini-batch grad descent__ 
+__Mini-batch grad descent__
 + 1pass through training set = 1 epoch(a single pass through the training set)
 + cost doesn't go down on every iteration; noisy but trends downwards
 + if size of mini batch = 1 &rarr; "stochastic grad descent"
 + if size of mini batch = somewhere between 1~m &rarr; fastest learning
-  + get lots of vectorization
-  + can make progress without needing to wait until processing the entire training set
++ get lots of vectorization
++ can make progress without needing to wait until processing the entire training set
 
 __Tips to choose the size of mini-batch__
 
@@ -303,8 +303,8 @@ Instead of V<sub>t</sub>, use V<sub>t</sub>/(1-β<sup>t</sup>)
 
 + to compute exponentially weighted average of gradients, then use grad to upgrade weights
 + larger learning rate = oscillations
-  + slow down grad descent
-  + prevent using larger learning rate
++ slow down grad descent
++ prevent using larger learning rate
 + on vertical axis, want learning to be slower because want to get rid of oscillations
 + on horizontal axis, want learning to be faster
 
@@ -312,9 +312,9 @@ on iteration t:
 + compute dw, db on current mini-batch
 + Vdw = βVdw + (1-β)dw
 + Vdb = βVdb + (1-β)db
-  + β : friction(commonly set to 0.9), dw & db : acceleration to a bowl to roll downhill
++ β : friction(commonly set to 0.9), dw & db : acceleration to a bowl to roll downhill
 + w := w - αVdw, b := b - αVdb
-  + to smooth out the steps of grad descent
++ to smooth out the steps of grad descent
 
 ### RMSprop
 
@@ -324,13 +324,13 @@ on iteration t:
 on iteration t:
 + compute dw, db on current mini-batch
 + Sdw = βSdw + (1-β)dw<sup>2</sup>
-  + keeping exponentially weighted average of the wquares of the derivatives
++ keeping exponentially weighted average of the wquares of the derivatives
 + Sdb = βSdb + (1-β)db<sup>2</sup>
-  + element-wise
++ element-wise
 + w := w - α * dw/sqrt(Sdw + ε)
 + b := b - α * db/sqrt(Sdb + ε)
-  + Sdw should be relatively small and Sdb should be relatively large
-  + plus ε to prevent w and b from exploding
++ Sdw should be relatively small and Sdb should be relatively large
++ plus ε to prevent w and b from exploding
 
 ### Adam Optimization Algorithm
 
@@ -365,7 +365,7 @@ __hyperparams__
 + prevents wandering around the min but never converging when α is fixed
 + make α smaller &rarr; end up oscillating in tight region around min
 
-1. Set α = α<sub>0</sub>/1+(decay rate)*(epoch number), 
+1. Set α = α<sub>0</sub>/1+(decay rate)*(epoch number),
 α<sub>0</sub> = initial learning rate
 
 2. α = 0.95 * α<sub>0</sub>
@@ -378,7 +378,7 @@ __hyperparams__
 
 ## The Problem of Local Optima
 
-`local optima`
+'local optima'
 
 <img src="https://www.researchgate.net/profile/Filippo-Venezia/publication/309033247/figure/fig2/AS:670011102351374@1536754503899/Global-and-local-optima-in-a-search-space-R-n-The-position-on-the-X-and-Y-axis.jpg" width=500>
 
@@ -388,8 +388,8 @@ What if we get caught in a local optima?
 
 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Saddle_point.svg/1200px-Saddle_point.svg.png" width=500>
 
-+ PLEATEAU: when going downwards along the pleateau towards the saddle point, training is slow
-+ after reaching the saddle point, it will get off the leateau
++ PLATEAU: when going downwards along the plateau towards the saddle point, training is slow
++ after reaching the saddle point, it will get off the plateau
 
 # Hyperparameter Tuning, Batch Normalization and Programming Frameworks
 
@@ -399,29 +399,29 @@ What if we get caught in a local optima?
 
 1. Try random values(defining a search space as a bounded domain of hyperparameter values and randomly sampling points in the domain) rather than using a grid(defining a search space as a grid of hyperparameter values and evaluating every position in the grid)
 2. Coarse to fine
-   1. Coarse sample of the entire domain
-   2. sample more densely into smaller domain
+1. Coarse sample of the entire domain
+2. sample more densely into a smaller domain
 
-### Using an Appropriate Scale to pick Hyperparpameters
+### Using an Appropriate Scale to pick Hyperparameters
 
 1. α learning rate: search on a log scale instead of linear scale
-    + distribute samples uniformly at random in a logarithmic scale of value range
++ distribute samples uniformly at random in a logarithmic scale of value range
 
 Implementing in Python
 
-```python
+'''python
 r = -4 * np.random.rand()
 # [-4, 0]
 alpha = 10 ** r
 # if sampling 10 ** a ... 10 ** b,
 # a = log0.0001 -> a = -4
 # b = log1 -> b = 0
-```
+'''
 
 2. β (when computing exponentially weighted average)
-    + expore values of 1-β
-    + 1-β = 10<sup>r</sup>
-    + β = 1 - 10<sup>r</sup>
++ expore values of 1-β
++ 1-β = 10<sup>r</sup>
++ β = 1 - 10<sup>r</sup>
 
 ex. when suspecting β to be [0.9, 0.999], 1-β is between 0.1~0.001
 
@@ -432,10 +432,10 @@ r ∈ [-3, -1]
 ### Hyperparameters Tuning in Practice
 
 + Babysitting one model
-  + when data set is huge but not lots of computational resources / CPUs & GPUs
-  + training one/very small num of models at a time
++ when data set is huge but not lots of computational resources / CPUs & GPUs
++ training one/very small num of models at a time
 + Training many models in parallel
-  + can try lots of different hyperparam settings and quickly pick the best one at the end
++ can try lots of different hyperparam settings and quickly pick the best one at the end
 
 ## Batch Normalization
 
@@ -465,11 +465,11 @@ __Mini-batch norm in NN__
 
 for t=1~#mini-batches:
 + compute forward prop on X<sup>{t}</sup>
-  + in each hidden layer, use batch norm to replace z<sup>[l]</sup>, W, z̃<sup>[l]</sup>
++ in each hidden layer, use batch norm to replace z<sup>[l]</sup>, W, z̃<sup>[l]</sup>
 + use backprop to compute dW<sup>[l]</sup>, dβ<sup>[l]</sup>, dγ<sup>[l]</sup>
 + update params
-  + W<sup>[l]</sup> := W<sup>[l]</sup> - αdW<sup>[l]</sup>
-  + ...
++ W<sup>[l]</sup> := W<sup>[l]</sup> - αdW<sup>[l]</sup>
++ ...
 
 1. take similar range of values of all features by normalizing &rarr; speed up learning
 
