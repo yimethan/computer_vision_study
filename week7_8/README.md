@@ -4,7 +4,9 @@
 
 ### Train / Dev / Test
 
-+ Training set : experiment &rarr; idea &rarr; code cycle
+<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbyU93A%2FbtqJhHQBUaK%2FQGe7Ft7lKg6zygulpEn55k%2Fimg.png" width=250>
+
++ Training set
 + Dev set
 + Test set
 
@@ -21,8 +23,8 @@ Big Data era: 1M/10K(big enough)/10K = 98/1/1
 
 |train set error|dev set error|description|
 |------|---|---|
-|1%|11%|high variance|
-|15%|16% (bad)|high bias|
+|1%|11%|high variance (overfitting)|
+|15%|16% (bad)|high bias (underfitting)|
 |15%|30% (even worse)|high var & bias|
 0.5%|1%|low var & bias|
 
@@ -47,12 +49,12 @@ Big Data era: 1M/10K(big enough)/10K = 98/1/1
 
 **Implementing 'L2 Regularization' for Logistic Regression**
 
-<img src="-/J.png" width=500>
+<img src="-/J.png" width=450>
 
 + Penalizes w matrices from being too large
 + Frobenious norm of matrix w : sum of square of elements of matrix w
 
-<img src="-/w.png" width=250>
+<img src="-/w.png" width=200>
 
 + Row i of the matrix = #neurons in current layer; n<sup>[l]</sup>
 + Column j of the matrix = #neurons in previous layer; n<sup>[l-1]</sup>
@@ -88,7 +90,7 @@ __Implementing Dropout__
 
 1. Inverted Dropout: the most common way
 
-'''python
+```python
 d3 = np.random.rand(a3.shape[0], a3.shape[1]) < keep_prob
 #vector d3 : dropout vector of layer 3
 # same shape as a3
@@ -98,9 +100,10 @@ a3 *= d3
 # element-wise multiplication
 
 a3 /= keep_prob
-# in z = wa + b, a is reduced
+in z = wa + b, a is reduced
 # to not reduce value of z, bump up back a3
-'''
+```
+
 ex. 50 units in 3rd hidden layer, a3 is (50, 1) vector, keep_prob = 0.8 (0.2 chance of eliminating any hidden unit)
 
 &rarr; 10 units zeroed out
@@ -113,8 +116,8 @@ ex. 50 units in 3rd hidden layer, a3 is (50, 1) vector, keep_prob = 0.8 (0.2 cha
 
 1. If getting more data is unable, make distortions & translations of images - make random crops of the image by flipping or rotating then add them to the training set
 2. Early stopping
-1. as running gradient descent, plot training error & devset error
-2. If haven't run many iterations, w is close to w; stopping when w has the mid-size rate will minimize dev set error
+3. as running gradient descent, plot training error & devset error
+4. If haven't run many iterations, w is close to w; stopping when w has the mid-size rate will minimize dev set error
 + <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FqbkHk%2Fbtq2QUJ2zf1%2FMpqJihqkJmSsTI0nY5Irj1%2Fimg.png" width=300>
 + CON: no longer can work computing w, b that minimizes cost function J and reducing variance to prevent overfitting independently
 
@@ -185,19 +188,12 @@ for each i:
 
 __Practical tips of implementing grad checking__
 
-<<<<<<< HEAD
-1. Don't use in training - only to debug
-+ Grad checking is a very slow computation so to implement grad descent, just use back prop to compute dθ
-2. If algorithm fails grad check, look at components to try to identify bu of dθ<sub>approx</sub><sup>[i]</sup> is far from dθ, look at different values of i to see which are the values of dθ<sub>approx</sub><sup>[i]</sup>
-+ those values came from dW<sup>[l]</sup> of a certain layer
-=======
 1. Don't use in training - only to debug 
    + Grad checking is a very slow computation so to implement grad descent, just use back prop to compute dθ
 2. If algorithm fails grad check, look at components to try to identify bug if dθ<sub>approx</sub><sup>[i]</sup> is far from dθ, look at different values of i to see which are the values of dθ<sub>approx</sub><sup>[i]</sup>
    +  those values came from dW<sup>[l]</sup> of a certain layer
->>>>>>> 1b5ee5ed064c601629b1618abde306f451c3a759
 3. Doesn't work with Dropout
-+ set keep_prob = 1.0
+   + set keep_prob = 1.0
 4. Back prop implementation might be incorrect when w, b are big, so run grad check at random initialization & train the network for a while so that w, b have some time to wander away from the initial values, then grad check again after training for some numbers of iterations
 
 # Optimization Algorithms
@@ -416,16 +412,16 @@ What if we get caught in a local optima?
 
 Implementing in Python
 
-'''python
+```python
 r = -4 * np.random.rand()
 # [-4, 0]
 alpha = 10 ** r
 # if sampling 10 ** a ... 10 ** b,
 # a = log0.0001 -> a = -4
 # b = log1 -> b = 0
-'''
+```
 
-2. β (when computing exponentially weighted average)
+1. β (when computing exponentially weighted average)
 + expore values of 1-β
 + 1-β = 10<sup>r</sup>
 + β = 1 - 10<sup>r</sup>

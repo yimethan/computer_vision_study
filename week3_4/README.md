@@ -2,11 +2,11 @@
 
 ## Neural Network
 
-<img src="-/neural_network.png" alt="neural_network" width="600"/>
+<img src="-/neural_network.png" alt="neural_network" width="500"/>
 
 + Stack single neurons &rarr; Larger neural network
 
-<img src="https://www.tibco.com/sites/tibco/files/media_entity/2021-05/neutral-network-diagram.svg" alt="neural_network" width="600"/>
+<img src="https://www.tibco.com/sites/tibco/files/media_entity/2021-05/neutral-network-diagram.svg" alt="neural_network" width="500"/>
 
 + Each of hidden units takes its inputs all input features
 
@@ -43,12 +43,16 @@ For high level performance, you need
     4. repeat in cycle
 + `algorithms` : making NN run much faster
   + ex. Sigmoid function &rarr; ReLU function
-  + <img src="https://t1.daumcdn.net/cfile/tistory/275BAD4F577B669920" alt="sigmoid" width="400"/>
+  + <img src="https://t1.daumcdn.net/cfile/tistory/275BAD4F577B669920" alt="sigmoid" width="300"/>
   + gradient nearly 0, learning becomes slow
-  + <img src="https://miro.medium.com/max/1838/1*LiBZo_FcnKWqoU7M3GRKbA.png" alt="relu" width="400"/>
+  + <img src="https://miro.medium.com/max/1838/1*LiBZo_FcnKWqoU7M3GRKbA.png" alt="relu" width="300"/>
 
 
 ## __Logistic Regression__ as a Neural Network
+
+`Logistic Regression`
++ a process of modeling the probability of a discrete outcome given an input variable
++ a mathematical model used to predict a binary outcome based on prior observations of a data set
 
 ### Logistic Regression for `Binary Classification`
 
@@ -75,13 +79,13 @@ b : real number
 
 In Logistic Regression &rarr; __𝑳(ŷ, y) = -(ylogŷ + (1-y)log(1-ŷ))__
 
-+ If y = 1, 𝐿(ŷ, y) = -logŷ
-  + want logŷ to be large
-  + want ŷ to be large
-
 + If y = 0, 𝐿(ŷ, y) = -log(1-ŷ)
   + want log(1-ŷ) to be large
   + want ŷ to be small
+
++ If y = 1, 𝐿(ŷ, y) = -logŷ
+  + want logŷ to be large
+  + want ŷ to be large
 
 ### __Cost function__
 
@@ -90,66 +94,47 @@ In Logistic Regression &rarr; __𝑳(ŷ, y) = -(ylogŷ + (1-y)log(1-ŷ))__
 
 <img src="-/cost_func.png" alt="costfunc" width="400"/>
 
-
 ## __Gradient Descent__
 
-+ Starts at the initial point(w, b) and moves in downhill direction of the cost function &rarr; Converge to the global optimum
-+ Repeat w:=w-αdw (α: learning rate, dw: slope of the function) &rarr; want to know dw at the current setting of the parameters w and b
-  
-![w](-/w.png), ![b](-/b.png)
++ Starts at the initial point (w, b) and moves in downhill direction of the cost function which is a convex function &rarr; Converge to the global optimum
++ Repeat w:=w-αdw, b:=b-αdb (α: learning rate, dw: slope of the function) &rarr; want to know dw at the current setting of the parameters w and b
 
-### Computating derivatives
+<img src="-/w.png" width=120>, <img src="-/b.png" width=120>
+
+### Computing derivatives
 
 + `Going backwards`, see the net change to the FinalOutputVariable when you bump up Var(the chain rule) &rarr; Optimize FinalOutputVariable
 + d FinalOutputVariable / d Var
 
 ### Logistic Regression Gradient Descent
 
-: Implementing gradient descent for logistic regression
+<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FMSxTR%2FbtqHEDV84Zh%2F9wxpZnCFImOiupLJCx4k91%2Fimg.png" width=280>
 
-When Z = w<sup>T</sup>x+b, ŷ = a = σ(z),  𝐿(a, y) = -(yloga + (1-y)log(1-a)) and
-+ features X1, X2
-+ input W1, W2, b
-+ Computation Graph: z = w<sub>1</sub>x<sub>1</sub> + w<sub>2</sub>x<sub>2</sub> + b &rarr; a = σ(z) &rarr; 𝐿(a, y)
-+ Then (going backwards) da = d𝐿(a, y) / da &rarr; dz = dL / dz &rarr; dw<sub>1</sub> = x<sub>1</sub>dz, dw<sub>2</sub> = x<sub>2</sub>dz, db = dz
-  + da = -(y/a) + (1-y)/(1-a), dz = a - y
++ features x<sub>1</sub>, x<sub>2</sub>
++ input w<sub>1</sub>, w<sub>2</sub>, b
+1. Computation Graph: <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbfIJcY%2FbtqHAUxAfcu%2Ff3uvCyq1Wmj6MCksbP32CK%2Fimg.png" width=400>
+2. Then (going backwards):
+   1. compute da: <img src="-/da.png" width=140>
+   2. compute dz: <img src="-/dz.png" width=250>
+      + <img src="-/dadz.png" width=220>
 
 ### Gradient descent on m examples
 
-+ One training sample (x<sup>(i)</sup>, y<sup>(i)</sup>)
-+ The overall cost functions as the average of individual losses
+<img src="-/cost_func.png" alt="costfunc" width="330"/>
 
-<img src="-/cost_func.png" alt="costfunc" width="400"/>
++ (dw<sub>1</sub> of each example) / m
 
-+ J=0, dw<sub>1</sub>=0, dw<sub>2</sub>, db=0
+**Computing derivatives of the cost function J with respect of each parameters w<sub>1</sub>, w<sub>2</sub>, b**
 
-#### **Computing derivatives of the cost function J with respect of each parameters w<sub>1</sub>, w<sub>2</sub>, b**
-  
-1.  for i=1 to m:
+<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fd1ZFhJ%2FbtqHzFAXJdV%2FaB3DXumthXSmcIQjt7Au71%2Fimg.png" width=400>
 
-+ z<sup>(i)</sup> = w<sup>T</sup>x<sup>(i)</sup>+b
+&rarr; w<sub>1</sub> := w<sub>1</sub> - αdw<sub>1</sub>
 
-+ a<sup>(i)</sup> = (z<sup>(i)</sup>)
+&rarr; w<sub>2</sub> := w<sub>2</sub> - αdw<sub>2</sub>
 
-+ J += [y<sup>(i)</sup>loga<sup>(i)</sup> +(1-y<sup>(i)</sup>)log(1-a<sup>(i)</sup>)]
+&rarr; b := b - αdb
 
-+ dz<sup>(i)</sup> = a<sup>(i)</sup> - y<sup>(i)</sup>
-
-+ dw<sub>1</sub> += x<sub>1</sub><sup>(i)</sup>dz<sup>(i)</sup>
-
-+ dw<sub>2</sub> += x<sub>2</sub><sup>(i)</sup>dz<sup>(i)</sup>
-
-+ (assuming there are just 2 features; if more features, use for loop)
-2. J /= m
-3. dw<sub>1</sub> /= m; dw<sub>2</sub> /= m; db /= m
-
-&rarr; dw<sub>1</sub> & dw<sub>2</sub> & db are accumulators `so` after the computation, dw<sub>1</sub> = dJ / dw<sub>1</sub>
-
-&rarr; w<sub>1</sub> := w<sub>1</sub> - dw<sub>1</sub>
-
-&rarr; w<sub>2</sub> := w<sub>2</sub> - dw<sub>2</sub>
-
-&rarr; b := b - db
++ if many features, have to use for loop &rarr; use vectorization
 
 # Vectorization
 
