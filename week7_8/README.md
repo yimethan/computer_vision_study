@@ -65,7 +65,7 @@ __Implementing Gradient Descent__
 
 1. <img src="-/dw[l].png" width=200>
 
-2. <img src="-/w[l].png" width=130>
+2. <img src="-/w[l].png" width=280>
 
 + L2 regulation = 'Weight Decay'
 + w(1-αλ/m), makes w to be a little smaller
