@@ -1,8 +1,19 @@
 # Tensorflow
 
-+ end-to-end open source platform for machine learning
-+ originally developed by researchers and engineers working on the Google Brain team within Google's Machine Intelligence Research organization to conduct machine learning and deep neural networks research
-+ provides stable Python and C++ APIs, as well as non-guaranteed backward compatible API for other languages
++ end-to-end open source library for ML and AI; particulary used for training and deep neural networks
++ developed by Google Brain team for internal Google use in research and production
++ Python, C++, Go, Java, R, Javascript
+
+## Keras
+
++ open source library
++ provides Python interface for artificial NN
++ contains implementations of commonly used layers, activation functions, optimizers, objectives
+
+## vs Pytorch
+
++ Tensorflow is easier to apply to different languages or modules
++ Pytorch is developed by Facebook, Tensorflow is developed by Google
 
 # MNIST dataset
 
@@ -22,5 +33,23 @@ No.|Batch size & epoch|Case|Train|Validation|Test|
 |4|batch 128, epoch 50|L2 regularization, Adam optimizer, batch normalization|time: 120.8866, loss: 0.0569, accuracy: 0.9947|loss: 0.1341, accuracy: 0.9784|loss: 0.1400, accuracy: 0.9760|
 |5|batch 256, epoch 50|L2 regularization, Adam optimizer|time: 63.3463, loss: 0.0408, accuracy: 0.9952|loss: 0.1162, accuracy: 0.9783|loss: 0.1170, accuracy: 0.9765|
 |6|batch 256, epoch 50|Dropout regularization(0.2), Adam optimizer|time: 60.0653, loss: 0.0058, accuracy: 0.9981|loss: 0.1018, accuracy: 0.9839|loss: 0.0938, accuracy: 0.9846|Epoch 10: early stopping, time: 12.7555, loss: 0.0078, accuracy: 0.9975|loss: 0.0843, accuracy: 0.9801|
-|7|batch 256, epoch 50|Early stopping(patience=5), Adam optimizer|Epoch 10: early stopping, time: 12.7555, loss:  0.0078, accuracy: 0.9975|loss: 0.0843, accuracy: 0.9801|loss: 0.0654, accuracy: 0.9788|
+|**7**|batch 256, epoch 50|Early stopping(patience=5), Adam optimizer|Epoch 10: early stopping, time: 12.7555, loss:  0.0078, accuracy: 0.9975|loss: 0.0843, accuracy: 0.9801|loss: 0.0654, accuracy: 0.9788|
 |8|batch 256, epoch 50|L2 regularization, Adam optimizer, batch normalization|time: 82.3498, loss: 0.0537, accuracy: 0.9952|loss:  0.1498, accuracy: 0.9796|loss: 0.1318, accuracy: 0.9804|
+
+---
+
+## one-hot encoding
+
++ data as a vector of one 1 and zeros(low 0, high 1)
+
+__Ex.__
+
+Classifying 0~9
+
+zero(0) : [1,0,0,0...0]
+
+one(1) : [0,1,0,0...0]
+
+two(2) : [0,0,1,0...0]
+
+...
