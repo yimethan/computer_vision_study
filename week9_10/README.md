@@ -27,7 +27,7 @@
 
 No.|Batch size & epoch|Case|Train|Validation|Test|
 |---|---|---|---|---|---|
-|1|batch 128, epoch 50|L2 regularization, Adam optimizer|time: 102.3717, loss: 0.0404, accuracy: 0.9966|loss: 0.1171, accuracy: 0.9783|loss: 0.1078, accuracy: 0.9803|
+|1|batch 128, epoch 50|L2 regularization, Adam optimizer|time: 102.5025, loss: 0.0402, accuracy: 0.9969|loss: 0.1146, accuracy: 0.9787|loss: 0.1158, accuracy: 0.9779|
 |2|batch 128, epoch 50|Dropout regularization(0.2), Adam optimizer|time: 90.5766, loss: 0.0078, accuracy: 0.9977|loss: 0.1143, accuracy: 0.9836|loss: 0.1027, accuracy: 0.9843|
 |3|batch 128, epoch 50|Early stopping(patience=5), Adam optimizer|Epoch 10: early stopping, time: 16.2595, loss: 0.0136, accuracy: 0.9954|loss: 0.0968, accuracy: 0.9792|loss: 0.0676, accuracy: 0.9802|
 |4|batch 128, epoch 50|L2 regularization, Adam optimizer, batch normalization|time: 120.8866, loss: 0.0569, accuracy: 0.9947|loss: 0.1341, accuracy: 0.9784|loss: 0.1400, accuracy: 0.9760|
@@ -38,7 +38,10 @@ No.|Batch size & epoch|Case|Train|Validation|Test|
 |9|batch 128, epoch 50|L2 regularization, Gradient descent optimizer|time: 99.6524, loss: 0.3260, accuracy: 0.9407|loss: 0.3159, accuracy: 0.9447|loss: 0.3217, accuracy: 0.9410|
 |10|batch 128, epoch 50|L2 regularization, Stochastic gradient descent optimizer|time: 99.1113, loss: 0.1941, accuracy: 0.9778|loss: 0.2171, accuracy: 0.9707|loss: 0.2123, accuracy: 0.9699|
 |11|batch 128, epoch 50|L2 regularization, RMS prop optimizer|time: 139.5406, loss: 0.0350, accuracy: 0.9953|loss: 0.1117, accuracy: 0.9806|loss: 0.1137, accuracy: 0.9786|
-
+|12|batch 128, epoch 100|Early stopping(patience=10), Adam optimizer|Epoch 13: early stopping, time: 22.0097, loss:  0.0105, accuracy: 0.9966|loss: 0.0924, accuracy: 0.9801|loss: 0.0673, accuracy: 0.9792|
+|13|batch 128, epoch 100|Early stopping(patience=10), L2 regularization, Adam optimizer|Epoch 31: early stopping, time: 64.5154, loss: 0.0422, accuracy: 0.9968|loss: 0.1217, accuracy: 0.9780|loss: 0.1136, accuracy: 0.9792|
+|14|batch 128, epoch 1000|Early stopping(patience=20), L2 regularization, Adam optimizer|Epoch 25: early stopping,time: 52.0969, loss: 0.0516, accuracy: 0.9943|loss: 0.1146, accuracy: 0.9792|loss: 0.1127, accuracy: 0.9791|
+​
 
 ---
 
