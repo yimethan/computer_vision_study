@@ -55,8 +55,12 @@ No.|Batch size & epoch|Case|Train|Validation|Test|
 |4|batch 128, epoch 50|L2 regularization, Adam optimizer, batch normalization|time: 120.8866, loss: 0.0569, accuracy: 0.9947|loss: 0.1341, accuracy: 0.9784|loss: 0.1400, accuracy: 0.9760|
 |5|batch 256, epoch 50|L2 regularization, Adam optimizer|time: 63.3463, loss: 0.0408, accuracy: 0.9952|loss: 0.1162, accuracy: 0.9783|loss: 0.1170, accuracy: 0.9765|
 |6|batch 256, epoch 50|Dropout regularization(0.2), Adam optimizer|time: 60.0653, loss: 0.0058, accuracy: 0.9981|loss: 0.1018, accuracy: 0.9839|loss: 0.0938, accuracy: 0.9846|Epoch 10: early stopping, time: 12.7555, loss: 0.0078, accuracy: 0.9975|loss: 0.0843, accuracy: 0.9801|
-|**7**|batch 256, epoch 50|Early stopping(patience=5), Adam optimizer|Epoch 10: early stopping, time: 12.7555, loss:  0.0078, accuracy: 0.9975|loss: 0.0843, accuracy: 0.9801|loss: 0.0654, accuracy: 0.9788|
+|7|batch 256, epoch 50|Early stopping(patience=5), Adam optimizer|Epoch 10: early stopping, time: 12.7555, loss:  0.0078, accuracy: 0.9975|loss: 0.0843, accuracy: 0.9801|loss: 0.0654, accuracy: 0.9788|
 |8|batch 256, epoch 50|L2 regularization, Adam optimizer, batch normalization|time: 82.3498, loss: 0.0537, accuracy: 0.9952|loss:  0.1498, accuracy: 0.9796|loss: 0.1318, accuracy: 0.9804|
+|9|batch 128, epoch 50|L2 regularization, Gradient descent optimizer|time: 99.6524, loss: 0.3260, accuracy: 0.9407|loss: 0.3159, accuracy: 0.9447|loss: 0.3217, accuracy: 0.9410|
+|10|batch 128, epoch 50|L2 regularization, Stochastic gradient descent optimizer|time: 99.1113, loss: 0.1941, accuracy: 0.9778|loss: 0.2171, accuracy: 0.9707|loss: 0.2123, accuracy: 0.9699|
+|11|batch 128, epoch 50|L2 regularization, RMS prop optimizer|time: 139.5406, loss: 0.0350, accuracy: 0.9953|loss: 0.1117, accuracy: 0.9806|loss: 0.1137, accuracy: 0.9786|
+
 
 ---
 
