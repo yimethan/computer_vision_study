@@ -21,12 +21,14 @@ Big Data era: 1M/10K(big enough)/10K = 98/1/1
 + high bias = underfitting
 + high variance = overfitting
 
+If human accuracy = 0%,
+
 |train set error|dev set error|description|
 |------|---|---|
 |1%|11%|high variance (overfitting)|
 |15%|16% (bad)|high bias (underfitting)|
 |15%|30% (even worse)|high var & bias|
-0.5%|1%|low var & bias|
+|0.5%|1%|low var & bias|
 
 ### Basic Recipe for ML
 

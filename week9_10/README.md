@@ -10,10 +10,32 @@
 + provides Python interface for artificial NN
 + contains implementations of commonly used layers, activation functions, optimizers, objectives
 
-## vs Pytorch
+## Tensorflow vs Pytorch
 
-+ Tensorflow is easier to apply to different languages or modules
-+ Pytorch is developed by Facebook, Tensorflow is developed by Google
+__Pytorch__
+
++ Facebook
++ Define by run (Define the model while running)
++ Torch(ML library)-based
++ Dynamic graph
+  + Generates new computational graph in each iteration
+  + Clean & intuitive code
+  + Can give changes to the model while training
++ Python-friendly
++ Usually used for research/study purposes in the past
++ Exceeded Tensorflow for the first time in 2020
+
+__Tensorflow__
+
++ Google
++ Define and run (Define the model before running)
++ Theano(library used for manipulating and evaluating mathematical expressions)-based
++ Static graph
+  + Use the same initial computational graph in every iteration
+  + Useful for graph optimization
+  + Can save the overall graph data structure as a file
++ Easier to apply to different languages and modules
++ Usually used for industrial purposes in the past
 
 # MNIST dataset
 
