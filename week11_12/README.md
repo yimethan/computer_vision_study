@@ -210,3 +210,56 @@ Convolution structure helps NN to encode the fact that an image shifted should r
 ## ResNets (Residual Networks)
 
 + enables to train very deep networks(deep networks have vanishing/exploding gradient problem)
++ built out of `Residual block`
+  + Plain network: <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FcefcGc%2FbtqNHZ1vqox%2FfkI6UZA2icAc6QIbkzxCrK%2Fimg.png" width=400>
+    + a<sup>[ℓ]</sup> &rarr; linear &rarr; ReLU &rarr; a<sup>[ℓ+1]</sup> &rarr; linear &rarr; ReLU &rarr; a<sup>[ℓ]</sup> &rarr; a<sup>[ℓ+2]</sup>
+    + a<sup>[ℓ+2]</sup> = g(z<sup>[ℓ+2]</sup>)
+  + Residual block: <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2F5rTS9%2FbtqNLoMXmFX%2FNMZlyWfoEz7IkM5vbkfY1k%2Fimg.png" width=420>
+    + a<sup>[ℓ]</sup> &rarr; ReLU &rarr; a<sup>[ℓ+2]</sup>
+    + <sup>[ℓ+2]</sup> = g(z<sup>[ℓ+2]</sup> __+ a<sup>[ℓ]</sup>__)
++ <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbngttG%2FbtqNG16wiyU%2FemrZdZRBpytkKlSPKUuXc0%2Fimg.png" width=400>
+
+
+### Why ResNets Work
+
+Ex.
+
+<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbMAOOh%2FbtqNMM0Ew5f%2F8pVmAHNFSdlTR3WPv6RD6k%2Fimg.png" width=400>
+
+If using ReLU, all a's >= 0
+
+a<sup>[ℓ+2]</sup> = g(z<sup>[ℓ+2]</sup> + a<sup>[ℓ]</sup>) = g(W<sup>[ℓ+2]</sup>a<sup>[ℓ+1]</sup> + b<sup>[ℓ+2]</sup> + a<sup>[ℓ]</sup>)
+
+If using L2 regularization, W<sup>[ℓ+2]</sup> & b<sup>[ℓ+2]</sup> shrink
+
+Assuming W<sup>[ℓ+2]</sup> = 0, b<sup>[ℓ+2]</sup> = 0,
+
+a<sup>[ℓ+2]</sup> = g(z<sup>[ℓ+2]</sup> + a<sup>[ℓ]</sup>) = g(W<sup>[ℓ+2]</sup>a<sup>[ℓ+1]</sup> + b<sup>[ℓ+2]</sup> + a<sup>[ℓ]</sup>) = g(a<sup>[ℓ]</sup>) = a<sup>[ℓ]</sup> (∵ ReLU)
+
+∴ a<sup>[ℓ+2]</sup> = a<sup>[ℓ]</sup>
+
++ z<sup>[ℓ+2]</sup> and a<sup>[ℓ]</sup> have same dimension
+  + If not, use W<sub>s</sub> to adjust dimension (W<sub>s</sub> can be a param, or a fixed matrix)
+  + a<sup>[ℓ+2]</sup> = g(z<sup>[ℓ+2]</sup> + W<sub>s</sub>a<sup>[ℓ]</sup>)
+
+## Network in Network and 1x1 Convolutions
+
++ shrinks channel
+  + shrinking width & height = pooling
++ save on computation
++ non-linearity
+
+Ex.
+
+To shrink channel(192 &rarr; 32),
+
+: Use 32 1x1 filters
+
+<img src="-/1x1.png" width=400>
+
+To keep channel as 192,
+
+<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fr1sSh%2FbtqNJwEw8YP%2FMdBTvMZDHy0KDSjiiSXMik%2Fimg.png" width=400>
+
+## Inception Network Motivation
+
