@@ -263,3 +263,54 @@ To keep channel as 192,
 
 ## Inception Network Motivation
 
+### Inception module
+
+: Training & stacking conv(1x1, 3x3, 5x5 filter) & max-pool(3x3) output to efficiently extract features
+
+<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FdpcRdT%2FbtqNJwxMJba%2F8fORQjdh8kFqBkKuVUW36k%2Fimg.png" width=400>
+
++ computational costs &uarr;&uarr; &rarr; `bottleneck layer` : adding 1x1 conv
+
+<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fc32vYZ%2FbtqNMfIQkNi%2F0zxV6oY2KkwUkq0DtmeG30%2Fimg.png" width=400>
+
+## Inception Network
+
+<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FtdKlU%2FbtqNJv6OMui%2FZ9KZ9AxhQtdUmzjY3JQy01%2Fimg.png" width=400>
+
+<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2F7OxNF%2FbtqNNiZqlz0%2FYkHOMJS3DqoFwVCz5sIa6k%2Fimg.png" width=400>
+
+Input &rarr; stem (inception not effective) &rarr; Inception module repeated &rarr; FC ... Fc softmax (Output)
+
+<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fbo8IOd%2FbtqNJwSaYYx%2FvMKTAOKXMVRTc5CRFFJLI0%2Fimg.png" width=400>
+
+Softmax layers
++ helps param update
++ prevent output performance from getting worse
++ have regulation effect
++ prevent overfitting
+
+## MobileNet
+
++ foundational CNN architecture used for computer vision
++ able to build & deploy new networks that work even in low compute environment(ex. mobile phone; less powerful CPU/GPU at deployment)
+
+### Normal convolution vs Depthwise seperable convolution
+
+In normal convolution,
+
+(n x n x n<sub>C</sub>) * (f x f x n<sub>C</sub>') = n<sub>out</sub> x n<sub>out</sub> x n<sub>c</sub>'
+
+_Computational cost = num of filter param x num of filter positions x num of filters_
+
+Ex. If 6x6x3 * 3x3x3 = 4x4x5,
+
+then computational cost = (3x3x3) x (4x4) x 6 = 2160
+
+In depthwise seperable convolution,
+
++ depthwise seperable convolution : input img * depthwise conv * pointwise conv = output
+
+1) Depthwise convolution
+
+<img src="-/d.jpeg" width=400>
+
