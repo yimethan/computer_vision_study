@@ -300,6 +300,8 @@ In normal convolution,
 
 (n x n x n<sub>C</sub>) * (f x f x n<sub>C</sub>') = n<sub>out</sub> x n<sub>out</sub> x n<sub>c</sub>'
 
+n<sub>c</sub> : num of channels, n<sub>c</sub>' : num of filters
+
 _Computational cost = num of filter param x num of filter positions x num of filters_
 
 Ex. If 6x6x3 * 3x3x3 = 4x4x5,
@@ -314,3 +316,95 @@ In depthwise seperable convolution,
 
 <img src="-/d.jpeg" width=400>
 
+Ex. 6x6x3 * 3x3 = 4x4x3,
+
+then computational cost = (3x3) x (4x4) x 3 = 432
+
+2) Pointwise convolution
+
+(n<sub>out</sub> x n<sub>out</sub> x n<sub>c</sub>) * (1 x 1 x n<sub>c</sub>) = n<sub>out</sub> x n<sub>out</sub> x n<sub>c</sub>'
+
+n<sub>c</sub> : num of channels, n<sub>c</sub>' : num of filters
+
+Ex. 4x4x3 * 1x1x3 = 4x4x5,
+
+then computational cost = (1x1x3)x (4x4) x 5 = 240
+
+```
+Normal : 2160
+Depth + point : 672
+```
+
+Common ratio of computational costs in these cases is 1/n<sub>c</sub>' + 1/f<sup>2</sup>
+
+## Mobile architecture
+
+MobileNet v1
+
+<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FHTvh9%2FbtqChF66iqJ%2FIJaCThdcNkzDtmicsrsL0k%2Fimg.png" width=400>
+
+: the one explained above
+
+MobileNet v2
+
+<img src="https://3033184753-files.gitbook.io/~/files/v0/b/gitbook-legacy-files/o/assets%2Fml%2F-MMARWLU6xXHUlsfby29%2F-MMAYgUH6c28kshy1cY5%2FUntitled%204.png?generation=1605437934413082&alt=media" width=400>
+
+Difference: 1) bottleneck residual connection 2) pointwise conv &rarr; projection
+
++ Expansion
+  + increases size of representatino within the battleneck block, allowing the NN to learn a richer function
++ Projection
+  + project the computation back to smaller set of values to be deployed in low compute environment like mobile phone
+
+## EfficientNet
+
+If more computation, bigger NN with more accuracy
+If less computation, faster but less accuracy
+
+&rarr; auto-scaling by EfficientNet
+
+Choices:
++ Resolution of image
++ Depth of NN
++ Width of NN
+
+## Practical Advice for Using ConvNets
+
+### Transfer learning
+
+: Download weights someone trained on the network architecture & use it as pre-training &rarr; transfer to new task
+
+1) Download NN & weights
+2) Get rid of softmax & create my own softmax units
+3) Choose the front layers to freeze(don't train those layers' params) & train or get rid of the other layers except the softmax layer
+=
+   + num of layers to freeze ∝ amount of dataset
+
+### Data augmentation
+
++ Mirroring
++ Random cropping(rotation, shearing, local warping, ...)
++ Color shifting
+  + PCA algorithm: If image mainly has R & B tint, add/subtract R & B &rarr; keeps overall color of the tint the same
+
+### Implementing distortion during training
+
+CPU thread constantly loading imgs from hard disk
++ let CPU thread implement distortions (then pass img to training)
++ usually multithread
+
+## The state of computer vision
+
+<img src="-/thestate.png" width=400>
+
+Need:
+
++ labeled data (x, y)
++ hand-engineered features/network architecture/other components
+
+## Tips for doing well on benchmarks/winning competitions
+
+1) Ensembling: train several networks independently & average their ouput y hats
+   1) never for serving customers
+2) Multi-crops at test time
+   <img src="-/crops.png" width=300>
