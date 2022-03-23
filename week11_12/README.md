@@ -2,7 +2,7 @@
 
 ## Computer vision
 
-Examples: Image classificaation, object detection, neural style transfer
+Examples: Image classification, object detection, neural style transfer
 
 Deep learning large images(large inputs)
 
@@ -10,7 +10,7 @@ Deep learning large images(large inputs)
 
 = hard to get enough data to prevent overfitting
 
-= convolution & memory requirements are infeasible
+= computational & memory requirements are infeasible
 
 &rarr; need to better implement convolution operation
 
@@ -79,6 +79,7 @@ If 3x3 filter, 9 params to train
 Ex. 6 x 6 &rarr; 8 x 8, number of padding pixels = 1
 
 `Valid conv` : no padding
+
 `Same conv` : output image size to be the same as the input image
 
 (n + 2p - f + 1) x (n + 2p - f + 1)
@@ -377,7 +378,6 @@ Choices:
 1) Download NN & weights
 2) Get rid of softmax & create my own softmax units
 3) Choose the front layers to freeze(don't train those layers' params) & train or get rid of the other layers except the softmax layer
-=
    + num of layers to freeze ∝ amount of dataset
 
 ### Data augmentation
@@ -404,7 +404,7 @@ Need:
 
 ## Tips for doing well on benchmarks/winning competitions
 
-1) Ensembling: train several networks independently & average their ouput y hats
+1) Ensembling: train several networks independently & average their output y hats
    1) never for serving customers
 2) Multi-crops at test time
    <img src="-/crops.png" width=300>
