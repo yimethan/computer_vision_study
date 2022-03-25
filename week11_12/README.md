@@ -286,7 +286,7 @@ Input &rarr; stem (inception not effective) &rarr; Inception module repeated &ra
 Softmax layers
 + helps param update
 + prevent output performance from getting worse
-+ have regulation effect
++ have regularization effect
 + prevent overfitting
 
 ## MobileNet
