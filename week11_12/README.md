@@ -213,11 +213,11 @@ Convolution structure helps NN to encode the fact that an image shifted should r
 + enables to train very deep networks(deep networks have vanishing/exploding gradient problem)
 + built out of `Residual block`
   + Plain network: <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FcefcGc%2FbtqNHZ1vqox%2FfkI6UZA2icAc6QIbkzxCrK%2Fimg.png" width=400>
-    + a<sup>[ℓ]</sup> &rarr; linear &rarr; ReLU &rarr; a<sup>[ℓ+1]</sup> &rarr; linear &rarr; ReLU &rarr; a<sup>[ℓ]</sup> &rarr; a<sup>[ℓ+2]</sup>
+    + a<sup>[ℓ]</sup> &rarr; linear &rarr; ReLU &rarr; a<sup>[ℓ+1]</sup> &rarr; linear &rarr; ReLU &rarr; a<sup>[ℓ+2]</sup>
     + a<sup>[ℓ+2]</sup> = g(z<sup>[ℓ+2]</sup>)
   + Residual block: <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2F5rTS9%2FbtqNLoMXmFX%2FNMZlyWfoEz7IkM5vbkfY1k%2Fimg.png" width=420>
     + a<sup>[ℓ]</sup> &rarr; ReLU &rarr; a<sup>[ℓ+2]</sup>
-    + <sup>[ℓ+2]</sup> = g(z<sup>[ℓ+2]</sup> __+ a<sup>[ℓ]</sup>__)
+    + a<sup>[ℓ+2]</sup> = g(z<sup>[ℓ+2]</sup> __+ a<sup>[ℓ]</sup>__)
 + <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbngttG%2FbtqNG16wiyU%2FemrZdZRBpytkKlSPKUuXc0%2Fimg.png" width=400>
 
 
