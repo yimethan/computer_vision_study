@@ -353,7 +353,7 @@ MobileNet v2
 Difference: 1) bottleneck residual connection 2) pointwise conv &rarr; projection
 
 + Expansion
-  + increases size of representatino within the battleneck block, allowing the NN to learn a richer function
+  + increases size of representation within the bottleneck block, allowing the NN to learn a richer function
 + Projection
   + project the computation back to smaller set of values to be deployed in low compute environment like mobile phone
 
