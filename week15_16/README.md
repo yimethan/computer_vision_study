@@ -178,3 +178,185 @@ __The entire U-Net architecture__
 <img src="-/unet.png" width=500>
 
 + Input image (h x w x 3) &rarr; Output image (h x w x n<sub>C</sub>)
+
+# Face Recognition
+
+## What is Face Recognition?
+
++ Verification
+  + input: image, name/ID
+  + output: input image = claimed person?
++ Recognition
+  + database of k person
+  + input: image
+  + output: ID if the person ∈ database
+
+## One-shot learning
+
+: learning from 1 example to recognize the person again
+
+__Ex.__
+
+Image &rarr; CNN &rarr; softmax(5)
+
+: have to update each time a new person joins
+
+&rarr; Use `Similarity function d(img1, img2)`
+
+d(img1, img2) = degree of difference between images
+
+**Verification**
+
+```
+If d(img1, img2) ≤ τ : same person
+
+If d(img1, img2) > τ : different person
+```
+
+**Recognition**
+
+```
+d(for img1 in database, img2) = small value : person is in the database
+```
+
+## Siamese Network
+
+<img src="-/siamese.png" width=500>
+
+f(x<sup>(1)</sup>) : encoding of x<sup>(1)</sup>
+
+&rarr; <img src="-/d.png" width=210>
+
+<img src="-/if.png" width=380>
+
+## Triplet Loss
+
+: to get good encoding for pics, define & apply GD on triplet loss function
+
+<img src="-/triplet.png" width=500>
+
++ Encoding of Anchor & Positive : similar
++ Encoding of Anchor & Negative : far apart
+
+<img src="-/alpha.png" width=270>
+
+`α` : margin
+
++ to assure NN doesn't just output 0 because all encodings are the same
++ makes A-P and A-N get further apart
+  + __Ex.__ d(A, P) = 0.5, d(A, N) = 0.51
+    + wo margin, d(a, N) is larger even they are different person
+    + w margin of 0.2, makes rather d(a, P) = 0.7 or d(A, N) = 0.3
+
+## Triplet Loss Function
+
+Given 3 imgs A, P, N:
+
+<img src="-/L.png" width=400>
+
++ Make trimplets out of dataset images
++ Need to have pairs of (A, P) at least for training set
+
+## Choosing Triplets
+
++ Randomly chosen: d(A, P) & d(A, N) too easily satisfied
++ Choose triplets that are hard to train on
+  + d(A, P) + α ≤ d(A, N) satisfied
+  + low d(A, P) ≈ high d(A, N)
+
+## Face Verification & Binary Classification
+
+### ConvNet params training ways
+
+1) Triplet Loss
+2) Face recognition into Binary classification
+
+<img src="-/binary.png" width=500>
+
+Encodings of images into logistic regression &rarr; ŷ (0: same, 1: different)
+
+**Formulas finding gap between encodings**
+
+<img src="-/yhat.png" width=240>
+
+_or_
+
+<img src="-/yhat2.png" width=260>
+
+# Neural Transfer
+
+## What is Neural Style Transfer
+
+<img src="-/nt.png" width=400>
+
+## What are deep ConvNets learning?
+
+Visualize what each of layers are computing
+
+&rarr; shallow layers: simple features(edge, particular shade of color)
+
+&rarr; deep layers: larger region of image
+
+<img src="-/ip.png" width=500>
+
+: image patches
+
++ red boxes = 9 patches that cause one hidden unit to be highly activated
+
+# Cost Function
+
+`J(G)` = α J <sub>Content</sub>(C, G) + β J<sub>Style</sub>(S, G)
+
++ α, β: hyperparameters
++ J <sub>Content</sub>(C, G) : measures how similar G is to C
++ J<sub>Style</sub>(S, G) : measures how similar G is to S
+
+Find generated image G
+
+1) Initiate G randomly &rarr; random noise image
+2) Use gradient descent to minimize J(G)
+     + G := G - α/2G * J(G)
+
+## Content Cost Function
+
++ when hidden layer ℓ(not too shallow nor deep) computes content cost
++ use pre-trained ConvNet and find how similar C&G are
++ a<sup>[ℓ] (C)</sup> & a<sup>[ℓ] (G)</sup> : activation of layer ℓ on imgs
++ If a<sup>[ℓ] (C)</sup> & a<sup>[ℓ] (G)</sup> are similar, both imgs have similar content
+
+&rarr; J<sub>Content</sub>(C, G) = 1/2 * || a<sup>[ℓ] (C)</sup> - a<sup>[ℓ] (G)</sup> ||<sup>2</sup>
+
+## Style Cost Function
+
+`Style of img` : correlation between activations across channels
+
+__Ex.__ output of layer ℓ : n<sub>H</sub> x n<sub>W</sub> x n<sub>C</sub> (left), image patches of layer ℓ (right)
+
+<img src="-/output.png" width=130> <img src="-/patch.png" width=180>
+
++ Red colored channel = image patches in red(vertical lines)
++ Yellow colored channel = iamge patches in yellow(brownish-orangish shades)
++ If two channels are highly correlated, vertical lines are likely to be in brownish-orangish shade at the same time
+
+__Style Matrix__ : above formulized
+
+Let a<sub>i, j, k</sub><sup>[ℓ]</sup> : activation at (n<sub>H</sub> = i, n<sub>W</sub> = j, n<sub>C</sub> = k)
+
+and G[ℓ] : n<sub>C</sub><sup>[ℓ]</sup> x n<sub>C</sub><sup>[ℓ]</sup>
+
+<img src="-/g.png" width=250>
+
++ k,  k' is 1~n<sub>C</sub>
++ correlated : G<sub>kk'</sub><sup>[ℓ]</sup> high
+
+__Style Cost Function__
+
+<img src="-/j.png" width=340>
+
+lamdba : hyperparameter
+
+## 1D & 3D Generalization
+
+__Ex.__ 14x14x14 * 5x5x5 = 10x10x10 _x1 (channel)_
+
+__Ex.__ 14x14x14x1 * 5x5x5(16 filters) = 10x10x10x16
