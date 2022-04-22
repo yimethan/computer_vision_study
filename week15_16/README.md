@@ -110,7 +110,7 @@ __Faster algorithms__
 
 ## Semantic Segmentation with U-Net
 
-`Segmantic Segmentation` : To draw carful outline around detected object. Useful for commercial application as well.
+`Semantic Segmentation` : To draw carful outline around detected object. Useful for commercial application as well.
 
 <img src="-/segmentation.png" width=400>
 
