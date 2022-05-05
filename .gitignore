@@ -11,8 +11,10 @@ cassava_leaves/cassava-leaf-disease-classification
 cassava_leaves/vgg.h5
 cassava_leaves/resnet50.h5
 cassava_leaves/cassava_vgg.h5
-cassava_leaves/cassava.h5
 cassava_leaves/logs
 cassava_leaves/.ipynb_checkpoints
 cassava_leaves/submission.csv
 cassava_leaves/epoch_79.h5
+cassava_leaves/effnet.h5
+
+input
