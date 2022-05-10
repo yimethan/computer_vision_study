@@ -16,7 +16,6 @@ cassava_leaves/.ipynb_checkpoints
 cassava_leaves/submission.csv
 cassava_leaves/epoch_79.h5
 cassava_leaves/effnet_(1).h5
-cassava_leaves/effnet_(2).h5
-cassava_leaves/effnet_(3).h5
+cassava_leaves/model_final.h5
 
 input
