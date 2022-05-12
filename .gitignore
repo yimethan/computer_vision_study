@@ -1,5 +1,6 @@
 week1-2/week1_2.pptx
 
+week9-10/.ipynb_checkpoints
 week9-10/best_model.h5
 
 week13-14/input
@@ -9,13 +10,14 @@ week13-14/vgg_weight.h5
 
 cassava_leaves/cassava-leaf-disease-classification
 cassava_leaves/vgg.h5
-cassava_leaves/resnet50.h5
 cassava_leaves/cassava_vgg.h5
 cassava_leaves/logs
 cassava_leaves/.ipynb_checkpoints
 cassava_leaves/submission.csv
 cassava_leaves/epoch_79.h5
 cassava_leaves/effnet_(1).h5
-cassava_leaves/model_final.h5
+cassava_leaves/resnet_(1).h5
+cassava_leaves/resnet_(2).h5
+cassava_leaves/checkpoint
 
 input
