@@ -17,7 +17,7 @@
   + Drop
   + Draw
   + Filter 
-  + Adjust: Brightness, R, G, B, H, S, Vf
+  + Adjust: Brightness, R, G, B, H, S, V
   + Advanced: Segmentation (Otsu), Edge detection (Canny edge).
 
 
