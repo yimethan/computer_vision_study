@@ -173,7 +173,7 @@ weighted avg|0.85|0.85|0.85|4279|
 |---|---|---|
 |inception_v3|(None, 9, 9, 2048)|21802784|
 |global_average_pooling2d|(None, 2048)|0|
-|dropout (Dropout)(None, 2048)|0|
+|dropout (Dropout)|(None, 2048)|0|
 |dense (Dense)|(None, 5)|10245|
 
 + Total params: 21,813,029
@@ -184,7 +184,7 @@ weighted avg|0.85|0.85|0.85|4279|
 
 + image size 350
 + batch size 16
-+ ? epochs
++ 12 epochs
   + Early stopping (Patience 3)
 + Data augmentation
   + Horizontal & Vertical flip
@@ -198,6 +198,20 @@ weighted avg|0.85|0.85|0.85|4279|
 + Reduce learning rate on plateau
   + Factor 0.2
   + Patience 1
++ Train loss 0.369, Train accuracy 0.876
++ Dev loss 0.400, Dev accuracy 0.864
+
+<img src="-/inception_output.png" width=580>
+
 + CV set result
 
-<img src="-/incpetionV3_output.png" width=580>
+|Label|precision|recall|f1-score|support|
+|---|---|---|---|---|
+|CBB|0.55|0.60|0.57|200|
+|CBSD|0.81|0.75|0.78|436|
+|CGM|0.83|0.73|0.78|495|
+|CMD|0.95|0.96|0.96|2638|
+|Healthy|0.66|0.72|0.69|510|
+|accuracy|||0.87|4279|
+|macro avg|0.76|0.75|0.75|4279|
+|weighted avg|0.87|0.87|0.87|4279|

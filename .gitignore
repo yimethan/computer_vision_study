@@ -18,6 +18,10 @@ cassava_leaves/epoch_79.h5
 cassava_leaves/effnet_(1).h5
 cassava_leaves/resnet_(1).h5
 cassava_leaves/resnet_(2).h5
+cassava_leaves/inception_(0).h5
 cassava_leaves/checkpoint
+cassava_leaves/inception_weights.data-00000-of-00001
+cassava_leaves/inception_weights.index
+cassava_leaves/model_inception_final.h5
 
 input
