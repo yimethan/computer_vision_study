@@ -12,7 +12,7 @@
 |block0_pooling (MaxPooling2D)|(None, 112, 112, 64)|0| 
 |block1_conv0 (Conv2D)|(None, 112, 112, 128)|73856|     
 |block1_conv1 (Conv2D)|(None, 112, 112, 128)|147584| 
-|block1_pooling (MaxPooling2D (None, 56, 56, 128)|0|
+|block1_pooling (MaxPooling2D)|(None, 56, 56, 128)|0|
 |block2_conv0 (Conv2D)|(None, 56, 56, 256)|295168|
 |block2_conv1 (Conv2D)|(None, 56, 56, 256)|590080|
 |block2_conv2 (Conv2D)|(None, 56, 56, 256)|590080|
@@ -55,7 +55,9 @@
   + patience 5
 + Train loss 0.431, Train accuracy 0.864
 + Dev loss 0.496, Dev accuracy 0.840
+
 <img src="-/vggoutput.png" width=580>
+
 + CV set result
 
 |Label|precision|recall|f1-score|support|
@@ -103,7 +105,9 @@ weighted avg|0.85|0.85|0.85|4279|
   + Patience 2
 + Train loss 0.316, Train accuracy 0.891
 + Dev loss 0.370, Dev accuracy 0.876
+
 <img src="-/effnet_output.png" width=580>
+
 + CV set result
   
 |Label|precision|recall|f1-score|support|
@@ -154,6 +158,7 @@ weighted avg|0.85|0.85|0.85|4279|
 + Train loss 0.599, Train accuracy 0.792
 + Dev loss 0.539, Dev accuracy 0.809
 <img src="-/resnet_output.png" width=580>
+
 + CV set result
 
 |Label|precision|recall|f1-score|support|
