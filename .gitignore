@@ -9,19 +9,10 @@ week13-14/.ipynb_checkpoints
 week13-14/vgg_weight.h5
 
 cassava_leaves/cassava-leaf-disease-classification
-cassava_leaves/vgg.h5
-cassava_leaves/cassava_vgg.h5
 cassava_leaves/logs
 cassava_leaves/.ipynb_checkpoints
 cassava_leaves/submission.csv
-cassava_leaves/epoch_79.h5
-cassava_leaves/effnet_(1).h5
-cassava_leaves/resnet_(1).h5
-cassava_leaves/resnet_(2).h5
-cassava_leaves/inception_(0).h5
-cassava_leaves/checkpoint
-cassava_leaves/inception_weights.data-00000-of-00001
-cassava_leaves/inception_weights.index
-cassava_leaves/model_inception_final.h5
+cassava_leaves/models
+cassava_leaves/k_folds_model
 
 input
