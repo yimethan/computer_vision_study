@@ -12,7 +12,7 @@ cassava_leaves/cassava-leaf-disease-classification
 cassava_leaves/logs
 cassava_leaves/.ipynb_checkpoints
 cassava_leaves/submission.csv
-cassava_leaves/models
-cassava_leaves/k_folds_model
+cassava_leaves/no_kfold/models
+cassava_leaves/yes_kfold/k_fold_model
 
 input
