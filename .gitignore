@@ -10,9 +10,9 @@ week13-14/vgg_weight.h5
 
 cassava_leaves/cassava-leaf-disease-classification
 cassava_leaves/logs
-cassava_leaves/.ipynb_checkpoints
-cassava_leaves/submission.csv
+cassava_leaves/no_kfold/.ipynb_checkpoints
 cassava_leaves/no_kfold/models
+cassava_leaves/yes_kfold/.ipynb_checkpoints
 cassava_leaves/yes_kfold/k_fold_model
 
 input
