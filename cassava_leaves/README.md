@@ -3,7 +3,7 @@
 <img src="-/count_of_disease_types.png" width=370>
 
 ## VGG16
----
+
 |Layer (type)|Output Shape|Param #|  
 |---|---|---|
 |input_1 (InputLayer)|[(None, 224, 224, 3)]|0|
@@ -69,10 +69,11 @@
 |Healthy|0.63|0.71|0.66|510|
 |accuracy|||0.85|4279|
 |macro avg|0.75|0.70|0.72|4279|
-weighted avg|0.85|0.85|0.85|4279|
+|weighted avg|0.85|0.85|0.85|4279|
+
++ Private score 0.1659, Public score 0.1734
 
 ## EfficientNet B3
----
 
 |Layer (type)|Output Shape|Param #|
 |---|---|---|
@@ -121,8 +122,10 @@ weighted avg|0.85|0.85|0.85|4279|
 |macro avg|0.78|0.78|0.78|4279|
 |weighted avg|0.88|0.88|0.88|4279|
 
++ Private score 0.6128, Public score 0.6023
+
 ## ResNet50
----
+
 |Layer (type)|Output Shape|Param #|
 |---|---|---|
 |resnet50|(None, 11, 11, 2048)|23587712|
@@ -172,8 +175,10 @@ weighted avg|0.85|0.85|0.85|4279|
 |macro avg|0.68|0.64|0.65|4279|
 |weighted avg|0.81|0.81|0.81|4279|
 
++ Notebook Threw Exception?
+
 ## Inception V3
----
+
 |Layer (type)|Output Shape|Param #|
 |---|---|---|
 |inception_v3|(None, 9, 9, 2048)|21802784|
@@ -220,3 +225,43 @@ weighted avg|0.85|0.85|0.85|4279|
 |accuracy|||0.87|4279|
 |macro avg|0.76|0.75|0.75|4279|
 |weighted avg|0.87|0.87|0.87|4279|
+
++ Private score 0.1000, Public score 0.1037
+
+---
+
+__Why low scores?__
+
+# k fold & more data
+
++ Add more data from https://www.kaggle.com/competitions/cassava-disease
++ Use k-fold cross validation (5)
++ Adam(learning_rate=0.0001)
++ Batch size 16
+
+<img src="-/moredata.png" width=370>
+
+## ResNet50
+
++ Private score 0.4557, Public score 0.4564
+
+## EfficientNet B3
+
++ Private score 0.6128, Public score 0.6023
+
+## VGG16
+
++ Private score 0.3139, Public score 0.3226
+
+## Ensemble ResNet50 & EffNet B3
+
++ Private score 0.6128, Public score 0.6023
+
+## Ensemble VGG16 & EffNet B3
+
++ Private score 0.6128, Public score 0.6023
+
+## Ensemble EffNet B3 & ResNet50 & VGG16
+
++ EffNet B3:ResNet50:VGG16=5:3:2
++ Private score 0.6128, Public score 0.6023

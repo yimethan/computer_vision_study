@@ -15,5 +15,7 @@ cassava_leaves/no_kfold/models
 cassava_leaves/.ipynb_checkpoints
 cassava_leaves/k_fold_resnet
 cassava_leaves/k_fold_effnet
+cassava_leaves/k_fold_vgg
+cassava_leaves/k_fold_inception
 
 input
