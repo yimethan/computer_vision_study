@@ -1,21 +1,17 @@
 week1-2/week1_2.pptx
 
-week9-10/.ipynb_checkpoints
-week9-10/best_model.h5
+week9-10-mnist/.ipynb_checkpoints
+week9-10-mnist/*.h5
 
 week13-14/input
 week13-14/logs
 week13-14/.ipynb_checkpoints
-week13-14/vgg_weight.h5
+week13-14/*.h5
 
-cassava_leaves/cassava-leaf-disease-classification
 cassava_leaves/logs
 cassava_leaves/no_kfold/.ipynb_checkpoints
 cassava_leaves/no_kfold/models
 cassava_leaves/.ipynb_checkpoints
-cassava_leaves/k_fold_resnet
-cassava_leaves/k_fold_effnet
-cassava_leaves/k_fold_vgg
-cassava_leaves/k_fold_inception
+cassava_leaves/k_fold_*
 
 input
