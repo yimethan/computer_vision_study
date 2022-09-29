@@ -1,3 +1,23 @@
+- [Shallow Neural Network](#shallow-neural-network)
+  - [Neural network](#neural-network)
+  - [Vectorizing](#vectorizing)
+    - [Vectorizing across multiple examples](#vectorizing-across-multiple-examples)
+  - [Activation Functions](#activation-functions)
+    - [1. Sigmoid function](#1-sigmoid-function)
+    - [2. tanh(z) (= Hyperbolic tangent function)](#2-tanhz--hyperbolic-tangent-function)
+    - [3. ReLU](#3-relu)
+    - [4. leaky ReLU](#4-leaky-relu)
+  - [Derivative of activation funcs](#derivative-of-activation-funcs)
+    - [1. Sigmoid function](#1-sigmoid-function-1)
+    - [2. tanh(z)](#2-tanhz)
+    - [3. ReLU](#3-relu-1)
+    - [4. leaky ReLU](#4-leaky-relu-1)
+  - [Gradient descent for NNs](#gradient-descent-for-nns)
+  - [Random Initialization](#random-initialization)
+- [Deep Neural Network](#deep-neural-network)
+  - [Why deep NN works well?](#why-deep-nn-works-well)
+  - [Forward propagation](#forward-propagation)
+
 # Shallow Neural Network
 
 ## Neural network

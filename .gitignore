@@ -1,20 +1,10 @@
-week1-2/week1_2.pptx
+cassava-leaf-disease/k_fold_*
+cassava-leaf-disease/logs
+cassava-leaf-disease/no_kfold/models
 
-week9-10-mnist/.ipynb_checkpoints
-week9-10-mnist/*.h5
+coursera/CNN/vgg-resnet-inception/logs
+coursera/CNN/vgg-resnet-inception/vgg_weight.h5
+coursera/CNN/vgg-resnet-inception/vgg16-dog-cat.h5
 
-week13-14/input
-week13-14/logs
-week13-14/.ipynb_checkpoints
-week13-14/*.h5
-
-cassava_leaves/logs
-cassava_leaves/no_kfold/.ipynb_checkpoints
-cassava_leaves/no_kfold/models
-cassava_leaves/.ipynb_checkpoints
-cassava_leaves/k_fold_*
-
-input
-
-self-driving-yolov5/.ipynb_checkpoints
-self-driving-yolov5/yolov5
+mnist-tensorflow/best_model.h5
+mnist-tensorflow/submission.csv

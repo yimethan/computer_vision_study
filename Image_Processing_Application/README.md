@@ -26,8 +26,6 @@
 1. Select File > Open
 2. Choose an image file to open
 
-
-
 ## Save As...
 
 ![save](-/save.gif)

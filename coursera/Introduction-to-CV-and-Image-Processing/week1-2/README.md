@@ -1,3 +1,27 @@
+- [1. Introduction to computer vision](#1-introduction-to-computer-vision)
+  - [**Intro**](#intro)
+    - [Computer vision and applications](#computer-vision-and-applications)
+  - [**Recent research**](#recent-research)
+  - [**Brainstorming my own applications**](#brainstorming-my-own-applications)
+    - [" What problems could computer vision solve?"](#-what-problems-could-computer-vision-solve)
+  - [**Image processing pipeline**](#image-processing-pipeline)
+- [2. Image processing with PIL and OpenCV](#2-image-processing-with-pil-and-opencv)
+  - [**What is a digital image**](#what-is-a-digital-image)
+  - [**Image Processing**](#image-processing)
+    - [PIL](#pil)
+    - [OpenCV](#opencv)
+  - [**Manipulation**](#manipulation)
+    - [PIL](#pil-1)
+    - [OpenCV](#opencv-1)
+  - [**Histogram**](#histogram)
+    - [Intensity transformations](#intensity-transformations)
+  - [**Geometric transforms & Mathematical Operations**](#geometric-transforms--mathematical-operations)
+    - [PIL](#pil-2)
+    - [OpenCV](#opencv-2)
+  - [**Spatial filtering**](#spatial-filtering)
+    - [PIL](#pil-3)
+    - [OpenCV](#opencv-3)
+
 # 1. Introduction to computer vision
 
 ## **Intro**

@@ -1,3 +1,16 @@
+- [Cassava Leaf Disease Classification](#cassava-leaf-disease-classification)
+  - [VGG16](#vgg16)
+  - [EfficientNet B3](#efficientnet-b3)
+  - [ResNet50](#resnet50)
+  - [Inception V3](#inception-v3)
+- [k fold & more data](#k-fold--more-data)
+  - [ResNet50](#resnet50-1)
+  - [EfficientNet B3](#efficientnet-b3-1)
+  - [VGG16](#vgg16-1)
+  - [Ensemble ResNet50 & EffNet B3](#ensemble-resnet50--effnet-b3)
+  - [Ensemble VGG16 & EffNet B3](#ensemble-vgg16--effnet-b3)
+  - [Ensemble EffNet B3 & ResNet50 & VGG16](#ensemble-effnet-b3--resnet50--vgg16)
+
 # Cassava Leaf Disease Classification
 
 <img src="-/count_of_disease_types.png" width=370>

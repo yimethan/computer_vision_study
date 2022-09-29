@@ -1,3 +1,20 @@
+- [Introduction to Deep Learning](#introduction-to-deep-learning)
+  - [Neural Network](#neural-network)
+  - [Supervised Learning](#supervised-learning)
+  - [Why is Deep Learning taking off?](#why-is-deep-learning-taking-off)
+  - [__Logistic Regression__ as a Neural Network](#logistic-regression-as-a-neural-network)
+    - [Logistic Regression for `Binary Classification`](#logistic-regression-for-binary-classification)
+    - [__Loss(error) function__](#losserror-function)
+    - [__Cost function__](#cost-function)
+  - [__Gradient Descent__](#gradient-descent)
+    - [Computing derivatives](#computing-derivatives)
+    - [Logistic Regression Gradient Descent](#logistic-regression-gradient-descent)
+    - [Gradient descent on m examples](#gradient-descent-on-m-examples)
+- [Vectorization](#vectorization)
+  - [Vectorizing Logistic Regression](#vectorizing-logistic-regression)
+    - [__Vectorizing Logistic Regression's Gradient Output__](#vectorizing-logistic-regressions-gradient-output)
+    - [__Implementing Logistic Regression__](#implementing-logistic-regression)
+
 # Introduction to Deep Learning
 
 ## Neural Network
