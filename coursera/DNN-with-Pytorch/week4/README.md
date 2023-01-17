@@ -270,7 +270,87 @@ fig.tight_layout()
 + no logistic function in the output
 + model.x.view(): converts rectangle tensors in a batch to a row tensor
 
+### Accuracy
 
+```python
+def accuracy(model, data_set):
+
+    return np.mean(data_set.y.view(-1).numpy() == (model(data_set.x)[:, 0] > 0.5).numpy())
+```
+
+### class Net & train function
+
+```python
+class Net(nn.Module):
+
+    def __init__(self, D_in, H, D_out):
+
+        super(Net, self).__init__()
+
+        # hidden layer
+        self.linear1 = nn.Linear(D_in, H);
+        self.linear2 = nn.Linear(H, D_out)
+
+    def forward(self, x):
+
+        x = torch.sigmoid(self.linear1(x))
+        x = torch.sigmoid(self.linear2(x))
+
+        return yhat
+
+def train(dataset, model, criterion, trainloader, optimizer, epochs=100):
+
+    cost = []
+    acc = []
+
+    for epoch in range(epochs):
+
+        total = 0
+
+        for x, y in trainloader:
+
+            yhat = model(x)
+            loss = criterion(yhat, y)
+            optimizer.zero_grad()
+            loss.backward()
+            optimizer.step()
+            
+            total += loss.item()
+
+        cost.append(total)
+        acc.append(accuracy(model, dataset))
+
+        if epoch % 300 == 0:
+
+            PlotStuff(X, Y, model, epoch, leg=True)
+        
+        plt.figure()
+        plt.plot(cost)
+        plt.xlabel('epoch')
+        plt.ylabel('cost')
+        plt.show()
+    
+    return cost
+```
+
+### Define NN, Cost function, Optimizer & Train model
+
+```python
+learning_rate = 0.1
+model = Net(1, 9, 1)
+
+optimizer = torch.optim.SGD(model.parameters(), lr=learning_rate)
+criterion = nn.BCELoss()
+
+trainloader = DataLoader(dataset, batch_size=100)
+
+cost = train(dataset, model, criterion, trainloader, optimizer, epochs=500)
+
+# plot loss
+plt.plot(cost_cross)
+plt.xlabel('epoch')
+plt.title('cross entropy loss')
+```
 
 7.5
 
