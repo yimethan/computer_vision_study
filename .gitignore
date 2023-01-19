@@ -3,10 +3,9 @@ cassava-leaf-disease/logs
 cassava-leaf-disease/no_kfold/models
 
 coursera/CNN/vgg-resnet-inception/logs
-coursera/CNN/vgg-resnet-inception/vgg_weight.h5
-coursera/CNN/vgg-resnet-inception/vgg16-dog-cat.h5
+coursera/CNN/vgg-resnet-inception/*.h5
 
 mnist-tensorflow/best_model.h5
 mnist-tensorflow/submission.csv
 
-coursera/DNN-with-Pytorch/week4/data
+coursera/DNN-with-Pytorch/*/data
