@@ -2,8 +2,7 @@ cassava-leaf-disease/k_fold_*
 cassava-leaf-disease/logs
 cassava-leaf-disease/no_kfold/models
 
-coursera/CNN/vgg-resnet-inception/logs
-coursera/CNN/vgg-resnet-inception/*.h5
+coursera/CNN/models/*/log
 
 mnist-tensorflow/best_model.h5
 mnist-tensorflow/submission.csv
