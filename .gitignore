@@ -1,10 +1,7 @@
-cassava-leaf-disease/k_fold_*
-cassava-leaf-disease/logs
-cassava-leaf-disease/no_kfold/models
+coursera/CNN/models/inception-v3/data
+coursera/DNN-with-Pytorch/*/data
 
-coursera/CNN/models/*/log
+kaggle/cassava-leaf-disease/outputs/*
 
 mnist-tensorflow/best_model.h5
 mnist-tensorflow/submission.csv
-
-coursera/DNN-with-Pytorch/*/data
