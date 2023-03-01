@@ -16,3 +16,8 @@
 
 + MNIST 
 + Cassava leaf disease classification
+
+## Shinhan contest
+
++ data preprocessing
++ pandas, csv
