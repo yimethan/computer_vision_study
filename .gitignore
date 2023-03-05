@@ -1,17 +1,7 @@
 coursera/CNN/models/inception-v3/data
 coursera/DNN-with-Pytorch/*/data
 
-face-recog/attendance-project/.idea
-face-recog\face_recog_age\ad_expose\faces
-face-recog/face_recog_age/compare_faces_evaluate/cmpImg
-face-recog/face_recog_age/compare_faces_evaluate/faces
-face-recog\face_recog_age\face_recognition_age
-face-recog/face_recog_age/pythonProject/ImagesAttendance
-face-recog/face_recog_age/pythonProject/ImagesBasic
-face-recog/face_recog_age/study_opencv/Resources
-face-recog/face_recog_attendance/templates
-
 kaggle/cassava-leaf-disease/outputs/*
 
-mnist-tensorflow/best_model.h5
-mnist-tensorflow/submission.csv
+kaggle/mnist-tensorflow/best_model.h5
+kaggle/mnist-tensorflow/submission.csv
