@@ -2,15 +2,10 @@ coursera/CNN/models/inception-v3/data
 coursera/DNN-with-Pytorch/*/data
 
 face-recog/attendance-project/.idea
-face-recog/attendance-project/ImagesAttendance
-face-recog/attendance-project/ImagesBasic
-face-recog/face_recog_age/ad_expose/faces
+face-recog\face_recog_age\ad_expose\faces
 face-recog/face_recog_age/compare_faces_evaluate/cmpImg
-face-recog/face_recog_age/compare_faces_evaluate/faces2
-face-recog/face_recog_age/face_recognition_age/faces
-face-recog/face_recog_age/face_recognition_age/kidsTest
-face-recog/face_recog_age/face_recognition_age/seniorTest
-face-recog/face_recog_age/face_recognition_age/youthTest
+face-recog/face_recog_age/compare_faces_evaluate/faces
+face-recog\face_recog_age\face_recognition_age
 face-recog/face_recog_age/pythonProject/ImagesAttendance
 face-recog/face_recog_age/pythonProject/ImagesBasic
 face-recog/face_recog_age/study_opencv/Resources
